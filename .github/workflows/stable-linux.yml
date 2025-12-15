@@ -67,7 +67,7 @@ jobs:
           grid_commit: ${{ github.event.inputs.grid_commit }} # Void added this
           grid_release: ${{ github.event.inputs.grid_release }} # Void added this
           AUTH_TOKEN: ${{ secrets.STRONGER_GITHUB_TOKEN }}
-                run: ./get_repo.sh
+        run: ./get_repo.sh
 
       - name: Check PR or cron
         env:
@@ -139,7 +139,7 @@ jobs:
           grid_commit: ${{ github.event.inputs.grid_commit }} # Void added this
           grid_release: ${{ github.event.inputs.grid_release }} # Void added this
           AUTH_TOKEN: ${{ secrets.STRONGER_GITHUB_TOKEN }}
-                run: ./get_repo.sh
+        run: ./get_repo.sh
         if: env.SHOULD_BUILD == 'yes'
 
       - name: Build
