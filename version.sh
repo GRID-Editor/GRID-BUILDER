@@ -2,7 +2,7 @@
 
 if [[ -z "${BUILD_SOURCEVERSION}" ]]; then
 
-    # Void updated this to use the BUILD_SOURCEVERSION with voidVersion
+    # GRID-IDE updated this to use the BUILD_SOURCEVERSION with gridVersion
     echo "running version.sh"
     # Check if vscode directory exists
     if [[ -d "./vscode" ]]; then
