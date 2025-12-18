@@ -154,11 +154,11 @@ if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
   setpath "product" "serverDataFolderName" ".grid-ide-server-insiders"
   setpath "product" "darwinBundleIdentifier" "com.grid.ide.insiders"
   setpath "product" "win32AppUserModelId" "GRID.IDE.Insiders"
-  setpath "product" "win32DirName" "Void Insiders"
+  setpath "product" "win32DirName" "GRID Insiders"
   setpath "product" "win32MutexName" "grid-ide-insiders"
-  setpath "product" "win32NameVersion" "Void Insiders"
+  setpath "product" "win32NameVersion" "GRID Insiders"
   setpath "product" "win32RegValueName" "grid-ide-insiders"
-  setpath "product" "win32ShellNameShort" "Void Insiders"
+  setpath "product" "win32ShellNameShort" "GRID Insiders"
   setpath "product" "win32AppId" "{{5893CE20-77AA-4856-A655-ECE65CBCF1C7}"
   setpath "product" "win32x64AppId" "{{7A261980-5847-44B6-B554-31DF0F5CDFC9}"
   setpath "product" "win32arm64AppId" "{{EE4FF7AA-A874-419D-BAE0-168C9DBCE211}"
@@ -230,8 +230,8 @@ fi
 
 replace 's|Microsoft Corporation|GRID-NETWORK|' build/lib/electron.js
 replace 's|Microsoft Corporation|GRID-NETWORK|' build/lib/electron.ts
-replace 's|([0-9]) Microsoft|\1 Void|' build/lib/electron.js
-replace 's|([0-9]) Microsoft|\1 Void|' build/lib/electron.ts
+replace 's|([0-9]) Microsoft|\1 GRID|' build/lib/electron.js
+replace 's|([0-9]) Microsoft|\1 GRID|' build/lib/electron.ts
 
 if [[ "${OS_NAME}" == "linux" ]]; then
   # microsoft adds their apt repo to sources
@@ -260,12 +260,12 @@ if [[ "${OS_NAME}" == "linux" ]]; then
   # code.spec.template
   sed -i 's|Microsoft Corporation|GRID Team|' resources/linux/rpm/code.spec.template
   sed -i 's|Visual Studio Code Team <vscode-linux@microsoft.com>|GRID Team <team@grid-network.com>|' resources/linux/rpm/code.spec.template
-  sed -i 's|Visual Studio Code|Void|' resources/linux/rpm/code.spec.template
+  sed -i 's|Visual Studio Code|GRID|' resources/linux/rpm/code.spec.template
   sed -i 's|https://code.visualstudio.com/docs/setup/linux|https://grid-network.com|' resources/linux/rpm/code.spec.template
   sed -i 's|https://code.visualstudio.com|https://grid-network.com|' resources/linux/rpm/code.spec.template
 
   # snapcraft.yaml
-  sed -i 's|Visual Studio Code|Void|'  resources/linux/rpm/code.spec.template
+  sed -i 's|Visual Studio Code|GRID|'  resources/linux/rpm/code.spec.template
 elif [[ "${OS_NAME}" == "windows" ]]; then
   # code.iss
   sed -i 's|https://code.visualstudio.com|https://grid-network.com|' build/win32/code.iss

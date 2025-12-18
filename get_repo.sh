@@ -80,7 +80,7 @@ echo "----------- get_repo exports -----------"
 echo "MS_TAG ${MS_TAG}"
 echo "MS_COMMIT ${MS_COMMIT}"
 echo "RELEASE_VERSION ${RELEASE_VERSION}"
-echo "VOID VERSION ${GRID_VERSION}"
+echo "GRID VERSION ${GRID_VERSION}"
 echo "----------------------"
 
 
