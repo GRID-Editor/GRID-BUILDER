@@ -20,7 +20,10 @@ cd vscode || { echo "'vscode' dir not found"; exit 1; }
 
 ../update_settings.sh
 
-# apply patches
+# GRID-SPECIFIC: Skip patch application
+# GRID is already a customized IDE and doesn't need VSCodium-style patches
+# The patches were designed for converting vanilla VSCode to VSCodium
+# but GRID is already the final product with all customizations built-in
 { set +x; } 2>/dev/null
 
 echo "APP_NAME=\"${APP_NAME}\""
@@ -29,37 +32,39 @@ echo "BINARY_NAME=\"${BINARY_NAME}\""
 echo "GH_REPO_PATH=\"${GH_REPO_PATH}\""
 echo "ORG_NAME=\"${ORG_NAME}\""
 
-echo "Applying patches at ../patches/*.patch..." # Void comment
-for file in ../patches/*.patch; do
-  if [[ -f "${file}" ]]; then
-    apply_patch "${file}"
-  fi
-done
-
-if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
-  echo "Applying insider patches..." # Void comment
-  for file in ../patches/insider/*.patch; do
-    if [[ -f "${file}" ]]; then
-      apply_patch "${file}"
-    fi
-  done
-fi
-
-if [[ -d "../patches/${OS_NAME}/" ]]; then
-  echo "Applying OS patches (${OS_NAME})..." # Void comment
-  for file in "../patches/${OS_NAME}/"*.patch; do
-    if [[ -f "${file}" ]]; then
-      apply_patch "${file}"
-    fi
-  done
-fi
-
-echo "Applying user patches..." # Void comment
-for file in ../patches/user/*.patch; do
-  if [[ -f "${file}" ]]; then
-    apply_patch "${file}"
-  fi
-done
+echo "GRID-SPECIFIC: Skipping patch application - GRID is already customized"
+# Patches disabled for GRID builds - uncomment below if needed for VSCodium-style builds
+#echo "Applying patches at ../patches/*.patch..." # Void comment
+#for file in ../patches/*.patch; do
+#  if [[ -f "${file}" ]]; then
+#    apply_patch "${file}"
+#  fi
+#done
+#
+#if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
+#  echo "Applying insider patches..." # Void comment
+#  for file in ../patches/insider/*.patch; do
+#    if [[ -f "${file}" ]]; then
+#      apply_patch "${file}"
+#    fi
+#  done
+#fi
+#
+#if [[ -d "../patches/${OS_NAME}/" ]]; then
+#  echo "Applying OS patches (${OS_NAME})..." # Void comment
+#  for file in "../patches/${OS_NAME}/"*.patch; do
+#    if [[ -f "${file}" ]]; then
+#      apply_patch "${file}"
+#    fi
+#  done
+#fi
+#
+#echo "Applying user patches..." # Void comment
+#for file in ../patches/user/*.patch; do
+#  if [[ -f "${file}" ]]; then
+#    apply_patch "${file}"
+#  fi
+#done
 
 set -x
 
