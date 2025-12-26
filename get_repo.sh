@@ -24,13 +24,13 @@ if [[ "${CI_BUILD}" != "no" ]]; then
 fi
 
 GRID_BRANCH="main"
-echo "Cloning GRID-IDE ${GRID_BRANCH}..."
+echo "Cloning GRID ${GRID_BRANCH}..."
 
 mkdir -p vscode
 cd vscode || { echo "'vscode' dir not found"; exit 1; }
 
 git init -q
-git remote add origin https://x-access-token:${AUTH_TOKEN}@github.com/GRID-NETWORK-REPO/GRID-IDE.git
+git remote add origin https://x-access-token:${AUTH_TOKEN}@github.com/GRID-NETWORK-REPO/GRID.git
 
 # Allow callers to specify a particular commit to checkout via the
 # environment variable GRID_COMMIT.  We still default to the tip of the
