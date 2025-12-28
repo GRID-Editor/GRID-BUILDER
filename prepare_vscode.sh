@@ -143,8 +143,8 @@ setpath "product" "tipsAndTricksUrl" "https://go.microsoft.com/fwlink/?linkid=85
 setpath "product" "twitterUrl" "https://x.com/grid_network"
 
 if [[ "${DISABLE_UPDATE}" != "yes" ]]; then
-  setpath "product" "updateUrl" "https://raw.githubusercontent.com/GRID-NETWORK/versions/refs/heads/main"
-  setpath "product" "downloadUrl" "https://github.com/GRID-NETWORK/binaries/releases"
+  setpath "product" "updateUrl" "https://grideditor.com/api/update"
+  setpath "product" "downloadUrl" "https://grideditor.com"
 fi
 
 if [[ "${VSCODE_QUALITY}" == "insider" ]]; then

@@ -1,14 +1,14 @@
-export VSCODE_CLI_APP_NAME="void"
-export VSCODE_CLI_BINARY_NAME="void-server"
-export VSCODE_CLI_DOWNLOAD_URL="https://github.com/voideditor/void/releases"
+export VSCODE_CLI_APP_NAME="grid"
+export VSCODE_CLI_BINARY_NAME="grid-server"
+export VSCODE_CLI_DOWNLOAD_URL="https://grideditor.com/download"
 export VSCODE_CLI_QUALITY="stable"
-export VSCODE_CLI_UPDATE_URL="https://raw.githubusercontent.com/voideditor/versions/refs/heads/main"
+export VSCODE_CLI_UPDATE_URL="https://grideditor.com/api/update"
 
 cargo build --release --target aarch64-apple-darwin --bin=code
 
-cp target/aarch64-apple-darwin/release/code "../../VSCode-darwin-arm64/Void.app/Contents/Resources/app/bin/void-tunnel"
+cp target/aarch64-apple-darwin/release/code "../../VSCode-darwin-arm64/GRID.app/Contents/Resources/app/bin/grid-tunnel"
 
-"../../VSCode-darwin-arm64/Void.app/Contents/Resources/app/bin/void-tunnel" serve-web
+"../../VSCode-darwin-arm64/GRID.app/Contents/Resources/app/bin/grid-tunnel" serve-web
 
 
 # export CARGO_NET_GIT_FETCH_WITH_CLI="true"

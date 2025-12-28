@@ -7,12 +7,12 @@ cd cli
 export CARGO_NET_GIT_FETCH_WITH_CLI="true"
 export VSCODE_CLI_APP_NAME="$( echo "${APP_NAME}" | awk '{print tolower($0)}' )"
 export VSCODE_CLI_BINARY_NAME="$( node -p "require(\"../product.json\").serverApplicationName" )"
-export VSCODE_CLI_UPDATE_ENDPOINT="https://raw.githubusercontent.com/voideditor/versions/refs/heads/main" # GRID
+export VSCODE_CLI_UPDATE_ENDPOINT="https://grideditor.com/api/update" # GRID
 
 if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
-  export VSCODE_CLI_DOWNLOAD_ENDPOINT="https://github.com/voideditor/void-insiders/releases"
+  export VSCODE_CLI_DOWNLOAD_ENDPOINT="https://grideditor.com/insiders/download"
 else
-  export VSCODE_CLI_DOWNLOAD_ENDPOINT="https://github.com/voideditor/void/releases" # GRID
+  export VSCODE_CLI_DOWNLOAD_ENDPOINT="https://grideditor.com/download" # GRID
 fi
 
 TUNNEL_APPLICATION_NAME="$( node -p "require(\"../product.json\").tunnelApplicationName" )"
