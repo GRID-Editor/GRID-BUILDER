@@ -2,35 +2,35 @@
 
 ## Table of Contents
 
-- [Getting all the Telemetry Out](#disable-telemetry)
-  - [Replacements to Microsoft Online Services](#replacement-online-services)
-- [Extensions + Marketplace](#extensions-marketplace)
-  - [How to use the OpenVSX Marketplace](#howto-openvsx-marketplace)
-  - [How to use a different extension gallery](#howto-switch-marketplace)
-  - [How to self host your own VS Code Marketplace](#howto-selfhost-marketplace)
+- [Getting all the Telemetry Out](#getting-all-the-telemetry-out)
+  - [Replacements to Microsoft Online Services](#replacements-to-microsoft-online-services)
+- [Extensions + Marketplace](#extensions--marketplace)
+  - [How to use the Open VSX Registry](#how-to-use-the-open-vsx-registry)
+  - [How to use a different extension gallery](#how-to-use-a-different-extension-gallery)
+  - [How to self-host your own extension gallery](#how-to-self-host-your-own-extension-gallery)
   - [Visual Studio Marketplace](#visual-studio-marketplace)
   - [Proprietary Debugging Tools](#proprietary-debugging-tools)
   - [Proprietary Extensions](#proprietary-extensions)
-- [Extensions compatibility](https://github.com/voideditor/void/blob/master/docs/extensions-compatibility.md)
-- [Migrating from Visual Studio Code to VSCodium](#migrating)
-- [Sign in with GitHub](#signin-github)
-- [Accounts authentication](https://github.com/voideditor/void/blob/master/docs/accounts-authentication.md)
-- [How do I run VSCodium in portable mode?](#portable)
-- [How do I fix the default file manager?](#file-manager)
-- [How do I press and hold a key and have it repeat in VSCodium?](#press-and-hold)
-- [How do I open VSCodium from the terminal?](#terminal-support)
+- [Extensions compatibility](https://github.com/GRID-Editor/GRID/blob/master/docs/extensions-compatibility.md)
+- [Migrating from Visual Studio Code to VSCodium](#migrating-from-visual-studio-code-to-vscodium)
+- [Sign in with GitHub](#sign-in-with-github)
+- [Accounts authentication](https://github.com/GRID-Editor/GRID/blob/master/docs/accounts-authentication.md)
+- [How do I run VSCodium in portable mode?](#how-do-i-run-vscodium-in-portable-mode)
+- [How do I fix the default file manager?](#how-do-i-fix-the-default-file-manager-linux)
+- [How do I press and hold a key and have it repeat in VSCodium?](#how-do-i-press-and-hold-a-key-and-have-it-repeat-in-vscodium-mac)
+- [How do I open VSCodium from the terminal?](#how-do-i-open-vscodium-from-the-terminal)
   - [From Linux .tar.gz](#from-linux-targz)
-- [Troubleshooting](https://github.com/voideditor/void/blob/master/docs/troubleshooting.md)
-- [Contributing](https://github.com/voideditor/void/blob/master/CONTRIBUTING.md)
-- [How to build VSCodium](https://github.com/voideditor/void/blob/master/docs/howto-build.md)
+- [Troubleshooting](https://github.com/GRID-Editor/GRID/blob/master/docs/troubleshooting.md)
+- [Contributing](https://github.com/GRID-Editor/GRID/blob/master/CONTRIBUTING.md)
+- [How to build VSCodium](https://github.com/GRID-Editor/GRID/blob/master/docs/howto-build.md)
 
-## <a id="disable-telemetry"></a>Getting all the Telemetry Out
+## Getting all the Telemetry Out
 
 Even though we do not pass the telemetry build flags (and go out of our way to cripple the baked-in telemetry), Microsoft will still track usage by default.
 
 We do however set the `telemetry.enableTelemetry` setting's default value to `false`. You can see those by viewing your VSCodium `settings.json` and searching for `telemetry`.
 
-The instructions [here](https://code.visualstudio.com/docs/supporting/faq#_how-to-disable-telemetry-reporting) help with explaining and toggling telemetry.
+The [telemetry documentation](https://code.visualstudio.com/docs/supporting/faq#_how-to-disable-telemetry-reporting) helps with explaining and toggling telemetry.
 
 It is also highly recommended that you review all the settings that "use online services" by following [these instructions](https://code.visualstudio.com/docs/getstarted/telemetry#_managing-online-services). The `@tag:usesOnlineServices` filter on the settings page will show that by default:
 
@@ -42,41 +42,43 @@ These can all be disabled.
 
 __Please note that some extensions send telemetry data to Microsoft as well. We have no control over this and can only recommend removing the extension.__ _(For example, the C# extension `ms-vscode.csharp` sends tracking data to Microsoft.)_
 
-### <a id="replacement-online-services"></a>Replacements to Microsoft Online Services
+### Replacements to Microsoft Online Services
 
-When searching the `@tag:usesOnlineServices` filter, note that while the "Update: Mode" setting description still says "The updates are fetched from a Microsoft online service", VSCodium's build script [sets the `updateUrl` field](https://github.com/voideditor/void/blob/master/prepare_vscode.sh#L36) in `product.json` to that of VSCodium's own small [update server](https://github.com/VSCodium/update-api), so enabling that setting won't actually result in any calls to Microsoft servers.
+When searching the `@tag:usesOnlineServices` filter, note that while the "Update: Mode" setting description still says "The updates are fetched from a Microsoft online service", VSCodium's build script [sets the `updateUrl` field](https://github.com/GRID-Editor/GRID/blob/master/prepare_vscode.sh#L36) in `product.json` to that of VSCodium's own small [update server](https://github.com/VSCodium/update-api), so enabling that setting won't actually result in any calls to Microsoft servers.
 
-Likewise, while the descriptions for "Extensions: Auto Check Updates" and "Extensions: Auto Update" include the same phrase, VSCodium [replaces](https://github.com/voideditor/void/blob/master/prepare_vscode.sh#L42) the Visual Studio Marketplace with Open VSX, so these settings won't call Microsoft, either.
+Likewise, while the descriptions for "Extensions: Auto Check Updates" and "Extensions: Auto Update" include the same phrase, VSCodium [replaces](https://github.com/GRID-Editor/GRID/blob/master/prepare_vscode.sh#L42) the Visual Studio Marketplace with Open VSX, so these settings won't call Microsoft, either.
 
-## <a id="extensions-marketplace"></a>Extensions + Marketplace
+## Extensions + Marketplace
 
 Being a vscode based editor, VSCodium gets additional features by installing VS Code extensions.
 Unfortunately, as Microsoft [prohibits usages of the Microsoft marketplace by any other products](https://github.com/microsoft/vscode/issues/31168) or redistribution of `.vsix` files from it, in order to use VS Code extensions in non-Microsoft products those need to be installed differently.
 
 By default, the `product.json` file is set up to use [open-vsx.org](https://open-vsx.org/) as extension gallery, which has an [adapter](https://github.com/eclipse/openvsx/wiki/Using-Open-VSX-in-VS-Code) to the Marketplace API used by VS Code. Since that is a rather new project, you will likely miss some extensions you know from the VS Code Marketplace. You have the following options to obtain such missing extensions:
 
-* Ask the extension maintainers to publish to [open-vsx.org](https://open-vsx.org/) in addition to the VS Code Marketplace. The publishing process is documented in the [Open VSX Wiki](https://github.com/eclipse/openvsx/wiki/Publishing-Extensions).
-* Create a pull request to [this repository](https://github.com/open-vsx/publish-extensions) to have the [@open-vsx](https://github.com/open-vsx) service account publish the extensions for you.
-* Download and [install the vsix files](https://code.visualstudio.com/docs/editor/extension-gallery#_install-from-a-vsix), for example from the release page in their source repository.
+- Ask the extension maintainers to publish to [open-vsx.org](https://open-vsx.org/) in addition to the VS Code Marketplace. The publishing process is documented in the [Open VSX Wiki](https://github.com/eclipse/openvsx/wiki/Publishing-Extensions).
+- Create a pull request to [this repository](https://github.com/open-vsx/publish-extensions) to have the [@open-vsx](https://github.com/open-vsx) service account publish the extensions for you.
+- Download and [install the vsix files](https://code.visualstudio.com/docs/editor/extension-gallery#_install-from-a-vsix), for example from the release page in their source repository.
 
-### <a id="howto-openvsx-marketplace"></a>How to use the Open VSX Registry
+### How to use the Open VSX Registry
 
 As noted above, the [Open VSX Registry](https://open-vsx.org/) is the pre-set extension gallery in VSCodium. Using the extension view in VSCodium will therefore by default use it.
-See [this article](https://www.gitpod.io/blog/open-vsx/) for more information on the motivation behind Open VSX.
+See [this article from Gitpod](https://www.gitpod.io/blog/open-vsx/) for more information on the motivation behind Open VSX.
 
-### <a id="howto-switch-marketplace"></a>How to use a different extension gallery
+### How to use a different extension gallery
 
 You can switch from the pre-set Open VSX Registry by configuring the endpoints using the following solutions.
 
 You can either use the following environment variables:
-- `VSCODE_GALLERY_SERVICE_URL` ***(required)***
-- `VSCODE_GALLERY_ITEM_URL` ***(required)***
+
+- `VSCODE_GALLERY_SERVICE_URL` ___(required)___
+- `VSCODE_GALLERY_ITEM_URL` ___(required)___
 - `VSCODE_GALLERY_CACHE_URL`
 - `VSCODE_GALLERY_CONTROL_URL`
-- `VSCODE_GALLERY_EXTENSION_URL_TEMPLATE` ***(required)***
+- `VSCODE_GALLERY_EXTENSION_URL_TEMPLATE` ___(required)___
 - `VSCODE_GALLERY_RESOURCE_URL_TEMPLATE`
 
 Or by creating a custom `product.json` at the following location (replace `VSCodium` by `VSCodium - Insiders` if you use that):
+
 - Windows: `%APPDATA%\VSCodium` or `%USERPROFILE%\AppData\Roaming\VSCodium`
 - macOS: `~/Library/Application Support/VSCodium`
 - Linux: `$XDG_CONFIG_HOME/VSCodium` or `~/.config/VSCodium`
@@ -96,22 +98,22 @@ with the content like:
 }
 ```
 
-### <a id="howto-selfhost-marketplace"></a>How to self-host your own extension gallery
+### How to self-host your own extension gallery
 
 Individual developers and enterprise companies in regulated or security-conscious industries can self-host their own extension gallery.
 
 There are likely other options, but the following were reported to work:
 
-* [Open VSX](https://github.com/eclipse/openvsx) eclipse open-source project
+- [Open VSX](https://github.com/eclipse/openvsx) eclipse open-source project
   While the public instance which is run by the Eclipse Foundation is the pre-set endpoint in VSCodium, you can host your own instance.
 
     > Open VSX is a [vendor-neutral](https://projects.eclipse.org/projects/ecd.openvsx) open-source alternative to the [Visual Studio Marketplace](https://marketplace.visualstudio.com/vscode). It provides a server application that manages [VS Code extensions](https://code.visualstudio.com/api) in a database, a web application similar to the VS Code Marketplace, and a command-line tool for publishing extensions similar to [vsce](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#vsce).
 
-* [code-marketplace](https://coder.com/blog/running-a-private-vs-code-extension-marketplace) open-source project
+- [code-marketplace](https://coder.com/blog/running-a-private-vs-code-extension-marketplace) open-source project
 
     > `code-marketplace` is a self-contained go binary that does not have a frontend or any mechanisms for extension authors to add or update extensions in the marketplace. It simply reads extensions from file storage and provides an API for VSCode compatible editors to consume.
 
-### <a id="visual-studio-marketplace"></a>Visual Studio Marketplace
+### Visual Studio Marketplace
 
 As with any online service, ensure you've understood [its terms of use](https://aka.ms/vsmarketplace-ToU) which include:
 > Marketplace Offerings are intended for use only with Visual Studio Products and Services and you may only install and use Marketplace Offerings with Visual Studio Products and Services.
@@ -120,13 +122,13 @@ So, we can't provide any help if you intend to infringe their terms of use.
 
 Also note that this extension gallery hosts multiple extensions that are non-free and have license-agreements that explicitly forbid using them in non-Microsoft products, along with using telemetry.
 
-### <a id="proprietary-debugging-tools"></a>Proprietary Debugging Tools
+### Proprietary Debugging Tools
 
 The debugger provided with Microsoft's [C# extension](https://github.com/OmniSharp/omnisharp-vscode) as well as the (Windows) debugger provided with their [C++ extension](https://github.com/Microsoft/vscode-cpptools) are very restrictively licensed to only work with the official Visual Studio Code build. See [this comment in the C# extension repo](https://github.com/OmniSharp/omnisharp-vscode/issues/2491#issuecomment-418811364) and [this comment in the C++ extension repo](https://github.com/Microsoft/vscode-cpptools/issues/21#issuecomment-248349017).
 
-A workaround exists to get debugging working in C# projects, by using Samsung's opensource [netcoredbg](https://github.com/Samsung/netcoredbg) package. See [this comment](https://github.com/voideditor/void/issues/82#issue-409806641) for instructions on how to set that up.
+A workaround exists to get debugging working in C# projects, by using Samsung's opensource [netcoredbg](https://github.com/Samsung/netcoredbg) package. See [this comment](https://github.com/GRID-Editor/GRID/issues/82#issue-409806641) for instructions on how to set that up.
 
-### <a id="proprietary-extensions"></a>Proprietary Extensions
+### Proprietary Extensions
 
 Like the debuggers mentioned above, some extensions you may find in the marketplace (like the [Remote Development Extensions](https://code.visualstudio.com/docs/remote/remote-overview)) only function with the official Visual Studio Code build. You can work around this by adding the extension's internal ID (found on the extension's page) to the `extensionAllowedProposedApi` property of the product.json in your VSCodium installation. For example:
 
@@ -141,7 +143,7 @@ Like the debuggers mentioned above, some extensions you may find in the marketpl
 
 In some cases, the above change won't help because the extension is hard-coded to only work with the official Visual Studio Code product.
 
-## <a id="migrating"></a>Migrating from Visual Studio Code to VSCodium
+## Migrating from Visual Studio Code to VSCodium
 
 VSCodium (and a freshly cloned copy of vscode built from source) stores its extension files in `~/.vscode-oss`. So if you currently have Visual Studio Code installed, your extensions won't automatically populate. You can reinstall your extensions from the Marketplace in VSCodium, or copy the `extensions` from `~/.vscode/extensions` to `~/.vscode-oss/extensions`.
 
@@ -163,53 +165,58 @@ To copy your settings manually:
 - Click the three dots `...` and choose 'Open settings.json'
 - Copy the contents of settings.json into the same place in VSCodium
 
-## <a id="signin-github"></a>Sign in with GitHub
+## Sign in with GitHub
 
-In VSCodium, `Sign in with GitHub` is using a Personal Access Token.<br />
-Follow the documentation https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token to create your token.<br />
+In VSCodium, `Sign in with GitHub` is using a Personal Access Token.
+Follow the documentation <https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token> to create your token.
 Select the scopes dependending on the extension which needs access to GitHub. (GitLens requires the `repo` scope.)
 
 ### Linux
 
 If you are getting the error `Writing login information to the keychain failed with error 'The name org.freedesktop.secrets was not provided by any .service files'.`, you need to install the package `gnome-keyring`.
 
-## <a id="portable"></a>How do I run VSCodium in portable mode?
+## How do I run VSCodium in portable mode?
+
 You can follow the [Portable Mode instructions](https://code.visualstudio.com/docs/editor/portable) from the Visual Studio Code website.
-- **Windows** / **Linux** : the instructions can be followed as written.
-- **macOS** : portable mode is enabled by the existence of a specially named folder. For Visual Studio Code that folder name is `code-portable-data`. For VSCodium, that folder name is `codium-portable-data`. So to enable portable mode for VSCodium on Mac OS, follow the instructions outlined in the [link above](https://code.visualstudio.com/docs/editor/portable), but create a folder named `codium-portable-data` instead of `code-portable-data`.
 
-## <a id="file-manager"></a>How do I fix the default file manager (Linux)?
+- __Windows__ / __Linux__ : the instructions can be followed as written.
+- __macOS__ : portable mode is enabled by the existence of a specially named folder. For Visual Studio Code that folder name is `code-portable-data`. For VSCodium, that folder name is `codium-portable-data`. So to enable portable mode for VSCodium on Mac OS, follow the instructions outlined in the [link above](https://code.visualstudio.com/docs/editor/portable), but create a folder named `codium-portable-data` instead of `code-portable-data`.
 
-In some cases, VSCodium becomes the file manager used to open directories (instead of apps like Dolphin or Nautilus).<br />
+## How do I fix the default file manager (Linux)?
+
+In some cases, VSCodium becomes the file manager used to open directories (instead of apps like Dolphin or Nautilus).
 It's due to that no application was defined as the default file manager and so the system is using the latest capable application.
 
 To set the default app, create the file `~/.config/mimeapps.list` with the content like:
-```
+
+```ini
 [Default Applications]
 inode/directory=org.gnome.Nautilus.desktop;
 ```
 
 You can find your regular file manager with the command:
-```
+
+```bash
 > grep directory /usr/share/applications/mimeinfo.cache
 inode/directory=codium.desktop;org.gnome.Nautilus.desktop;
 ```
 
-## <a id="press-and-hold"></a>How do I press and hold a key and have it repeat in VSCodium (Mac)?
+## How do I press and hold a key and have it repeat in VSCodium (Mac)?
 
 This is a common question for Visual Studio Code and the procedure is slightly different in VSCodium because the `defaults` path is different.
 
 ```bash
-$ defaults write com.vscodium ApplePressAndHoldEnabled -bool false
+defaults write com.vscodium ApplePressAndHoldEnabled -bool false
 ```
 
-## <a id="terminal-support"></a>How do I open VSCodium from the terminal?
+## How do I open VSCodium from the terminal?
 
 For macOS and Windows:
+
 - Go to the command palette (View | Command Palette...)
 - Choose `Shell command: Install 'codium' command in PATH`.
 
-![](https://user-images.githubusercontent.com/2707340/60140295-18338a00-9766-11e9-8fda-b525b6f15c13.png)
+![Install command](https://user-images.githubusercontent.com/2707340/60140295-18338a00-9766-11e9-8fda-b525b6f15c13.png)
 
 This allows you to open files or directories in VSCodium directly from your terminal:
 
@@ -222,6 +229,8 @@ Feel free to alias this command to something easier to type in your shell profil
 
 On Linux, when installed with a package manager, `codium` has been installed in your `PATH`.
 
-### <a id="from-linux-targz"></a>From Linux .tar.gz
+### From Linux .tar.gz
+
+When the archive `VSCodium-linux-<arch>-<version>.tar.gz` is extracted, the main entry point for VSCodium is `./bin/codium`.
 
 When the archive `VSCodium-linux-<arch>-<version>.tar.gz` is extracted, the main entry point for VSCodium is `./bin/codium`.

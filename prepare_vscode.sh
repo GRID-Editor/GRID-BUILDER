@@ -128,19 +128,19 @@ setpath_json() {
 cp product.json{,.bak}
 
 setpath "product" "checksumFailMoreInfoUrl" "https://go.microsoft.com/fwlink/?LinkId=828886"
-setpath "product" "documentationUrl" "https://grid-network.com"
+setpath "product" "documentationUrl" "https://grideditor.com/docs"
 # setpath_json "product" "extensionsGallery" '{"serviceUrl": "https://open-vsx.org/vscode/gallery", "itemUrl": "https://open-vsx.org/vscode/item"}'
 setpath "product" "introductoryVideosUrl" "https://go.microsoft.com/fwlink/?linkid=832146"
 setpath "product" "keyboardShortcutsUrlLinux" "https://go.microsoft.com/fwlink/?linkid=832144"
 setpath "product" "keyboardShortcutsUrlMac" "https://go.microsoft.com/fwlink/?linkid=832143"
 setpath "product" "keyboardShortcutsUrlWin" "https://go.microsoft.com/fwlink/?linkid=832145"
-setpath "product" "licenseUrl" "https://github.com/GRID-NETWORK/GRID-IDE/blob/main/LICENSE.txt"
+setpath "product" "licenseUrl" "https://github.com/GRID-Editor/GRID/blob/main/LICENSE"
 # setpath_json "product" "linkProtectionTrustedDomains" '["https://open-vsx.org"]'
 # setpath "product" "releaseNotesUrl" "https://go.microsoft.com/fwlink/?LinkID=533483#vscode"
-setpath "product" "reportIssueUrl" "https://github.com/GRID-NETWORK/GRID-IDE/issues/new"
-setpath "product" "requestFeatureUrl" "https://github.com/GRID-NETWORK/GRID-IDE/issues/new"
+setpath "product" "reportIssueUrl" "https://github.com/GRID-Editor/GRID/issues/new"
+setpath "product" "requestFeatureUrl" "https://github.com/GRID-Editor/GRID/issues/new"
 setpath "product" "tipsAndTricksUrl" "https://go.microsoft.com/fwlink/?linkid=852118"
-setpath "product" "twitterUrl" "https://x.com/grid_network"
+setpath "product" "twitterUrl" "https://x.com/grid_editor"
 
 if [[ "${DISABLE_UPDATE}" != "yes" ]]; then
   setpath "product" "updateUrl" "https://grideditor.com/api/update"
@@ -205,7 +205,7 @@ cp package.json{,.bak}
 
 setpath "package" "version" "${RELEASE_VERSION%-insider}"
 
-replace 's|Microsoft Corporation|GRID-NETWORK|' package.json
+replace 's|Microsoft Corporation|GRID Editor|' package.json
 
 cp resources/server/manifest.json{,.bak}
 
@@ -233,8 +233,8 @@ fi
 
 ../undo_telemetry.sh
 
-replace 's|Microsoft Corporation|GRID-NETWORK|' build/lib/electron.js
-replace 's|Microsoft Corporation|GRID-NETWORK|' build/lib/electron.ts
+replace 's|Microsoft Corporation|GRID Editor|' build/lib/electron.js
+replace 's|Microsoft Corporation|GRID Editor|' build/lib/electron.ts
 replace 's|([0-9]) Microsoft|\1 GRID|' build/lib/electron.js
 replace 's|([0-9]) Microsoft|\1 GRID|' build/lib/electron.ts
 
@@ -252,29 +252,29 @@ if [[ "${OS_NAME}" == "linux" ]]; then
   # fix the packages metadata
   # code.appdata.xml
   sed -i 's|Visual Studio Code|GRID-IDE|g' resources/linux/code.appdata.xml
-  sed -i 's|https://code.visualstudio.com/docs/setup/linux|https://grid-network.com|' resources/linux/code.appdata.xml
+  sed -i 's|https://code.visualstudio.com/docs/setup/linux|https://grideditor.com|' resources/linux/code.appdata.xml
   sed -i 's|https://code.visualstudio.com/home/home-screenshot-linux-lg.png|https://vscodium.com/img/vscodium.png|' resources/linux/code.appdata.xml
-  sed -i 's|https://code.visualstudio.com|https://grid-network.com|' resources/linux/code.appdata.xml
+  sed -i 's|https://code.visualstudio.com|https://grideditor.com|' resources/linux/code.appdata.xml
 
   # control.template
-  sed -i 's|Microsoft Corporation <vscode-linux@microsoft.com>|GRID Team <team@grid-network.com>|'  resources/linux/debian/control.template
+  sed -i 's|Microsoft Corporation <vscode-linux@microsoft.com>|GRID Team <team@grideditor.com>|'  resources/linux/debian/control.template
   sed -i 's|Visual Studio Code|GRID-IDE|g' resources/linux/debian/control.template
-  sed -i 's|https://code.visualstudio.com/docs/setup/linux|https://grid-network.com|' resources/linux/debian/control.template
-  sed -i 's|https://code.visualstudio.com|https://grid-network.com|' resources/linux/debian/control.template
+  sed -i 's|https://code.visualstudio.com/docs/setup/linux|https://grideditor.com|' resources/linux/debian/control.template
+  sed -i 's|https://code.visualstudio.com|https://grideditor.com|' resources/linux/debian/control.template
 
   # code.spec.template
   sed -i 's|Microsoft Corporation|GRID Team|' resources/linux/rpm/code.spec.template
-  sed -i 's|Visual Studio Code Team <vscode-linux@microsoft.com>|GRID Team <team@grid-network.com>|' resources/linux/rpm/code.spec.template
+  sed -i 's|Visual Studio Code Team <vscode-linux@microsoft.com>|GRID Team <team@grideditor.com>|' resources/linux/rpm/code.spec.template
   sed -i 's|Visual Studio Code|GRID|' resources/linux/rpm/code.spec.template
-  sed -i 's|https://code.visualstudio.com/docs/setup/linux|https://grid-network.com|' resources/linux/rpm/code.spec.template
-  sed -i 's|https://code.visualstudio.com|https://grid-network.com|' resources/linux/rpm/code.spec.template
+  sed -i 's|https://code.visualstudio.com/docs/setup/linux|https://grideditor.com|' resources/linux/rpm/code.spec.template
+  sed -i 's|https://code.visualstudio.com|https://grideditor.com|' resources/linux/rpm/code.spec.template
 
   # snapcraft.yaml
   sed -i 's|Visual Studio Code|GRID|'  resources/linux/rpm/code.spec.template
 elif [[ "${OS_NAME}" == "windows" ]]; then
   # code.iss
-  sed -i 's|https://code.visualstudio.com|https://grid-network.com|' build/win32/code.iss
-  sed -i 's|Microsoft Corporation|GRID-NETWORK|' build/win32/code.iss
+  sed -i 's|https://code.visualstudio.com|https://grideditor.com|' build/win32/code.iss
+  sed -i 's|Microsoft Corporation|GRID Editor|' build/win32/code.iss
 fi
 
 cd ..
