@@ -1,4 +1,4 @@
-name: stable-linux
+name: insiders-linux
 
 on:
   workflow_dispatch:
@@ -19,7 +19,7 @@ on:
         type: string
         description: Custom release number
   repository_dispatch:
-    types: [stable]
+    types: [insiders]
   push:
     branches: [ master ]
     paths-ignore:
@@ -40,7 +40,7 @@ env:
   ORG_NAME: ${{ github.repository_owner }}
   OS_NAME: linux
   VERSIONS_REPOSITORY: ${{ github.repository_owner }}/versions
-  VSCODE_QUALITY: stable
+  VSCODE_QUALITY: insider
 
 jobs:
   check:
@@ -53,7 +53,7 @@ jobs:
       SHOULD_DEPLOY: ${{ env.SHOULD_DEPLOY }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           ref: ${{ env.GITHUB_BRANCH }}
 
@@ -93,7 +93,7 @@ jobs:
       BUILD_SOURCEVERSION: ${{ env.BUILD_SOURCEVERSION }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           ref: ${{ env.GITHUB_BRANCH }}
         if: env.SHOULD_BUILD == 'yes'
@@ -118,13 +118,13 @@ jobs:
             --recv-keys 2C277A0A352154E5 1E9377A2BA9EF27F
 
       - name: Setup Node.js environment
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
         with:
           node-version: '20.18.2'
         if: env.SHOULD_BUILD == 'yes'
 
       - name: Setup Python 3
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
         if: env.SHOULD_BUILD == 'yes'
@@ -156,7 +156,7 @@ jobs:
         if: env.SHOULD_BUILD == 'yes'
 
       - name: Upload vscode artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: vscode
           path: ./vscode.tar.gz
@@ -213,7 +213,7 @@ jobs:
       SHOULD_DEPLOY: ${{ env.SHOULD_DEPLOY }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           ref: ${{ env.GITHUB_BRANCH }}
         if: env.DISABLED != 'yes' && env.SHOULD_BUILD == 'yes'
@@ -244,7 +244,7 @@ jobs:
         if: env.DISABLED != 'yes' && env.SHOULD_BUILD == 'yes'
 
       - name: Download vscode artifact
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v4
         with:
           name: vscode
         if: env.DISABLED != 'yes' && env.SHOULD_BUILD == 'yes'
@@ -279,7 +279,7 @@ jobs:
         if: env.DISABLED != 'yes' && env.SHOULD_BUILD == 'yes' && env.SHOULD_DEPLOY == 'yes'
 
       - name: Upload assets
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: bin-${{ matrix.vscode_arch }}
           path: assets/
@@ -328,7 +328,7 @@ jobs:
     if: needs.check.outputs.SHOULD_BUILD == 'yes' || github.event.inputs.generate_assets == 'true'
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           ref: ${{ env.GITHUB_BRANCH }}
         if: env.DISABLED != 'yes'
@@ -347,13 +347,13 @@ jobs:
         if: env.DISABLED != 'yes'
 
       - name: Setup Node.js environment
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
         with:
           node-version: '20.18.2'
         if: env.DISABLED != 'yes'
 
       - name: Setup Python 3
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
         if: env.DISABLED != 'yes'
@@ -374,7 +374,7 @@ jobs:
         if: env.DISABLED != 'yes'
 
       - name: Download vscode artifact
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v4
         with:
           name: vscode
         if: env.DISABLED != 'yes' && (env.SHOULD_BUILD_REH != 'no' || env.SHOULD_BUILD_REH_WEB != 'no' || github.event.inputs.generate_assets == 'true')
@@ -394,7 +394,7 @@ jobs:
         if: env.DISABLED != 'yes' && env.SHOULD_DEPLOY == 'yes' && (env.SHOULD_BUILD_REH != 'no' || env.SHOULD_BUILD_REH_WEB != 'no')
 
       - name: Upload assets
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: reh-linux-${{ matrix.vscode_arch }}
           path: assets/
@@ -429,7 +429,7 @@ jobs:
     if: needs.check.outputs.SHOULD_BUILD == 'yes' || github.event.inputs.generate_assets == 'true'
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           ref: ${{ env.GITHUB_BRANCH }}
 
@@ -459,7 +459,7 @@ jobs:
         if: env.SHOULD_BUILD == 'yes'
 
       - name: Download vscode artifact
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v4
         with:
           name: vscode
         if: env.DISABLED != 'yes' && (env.SHOULD_BUILD_REH != 'no' || env.SHOULD_BUILD_REH_WEB != 'no' || github.event.inputs.generate_assets == 'true')
@@ -479,130 +479,9 @@ jobs:
         if: env.DISABLED != 'yes' && env.SHOULD_DEPLOY == 'yes' && (env.SHOULD_BUILD_REH != 'no' || env.SHOULD_BUILD_REH_WEB != 'no')
 
       - name: Upload assets
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: reh-alpine-${{ matrix.vscode_arch }}
           path: assets/
           retention-days: 3
         if: env.DISABLED != 'yes' && env.SHOULD_DEPLOY == 'no' && github.event.inputs.generate_assets == 'true'
-
-  # Void commented this out:
-  # aur:
-  #   needs:
-  #     - check
-  #     - build
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       include:
-  #       - package_name: void
-  #         package_type: stable
-  #       # - package_name: vscodium-git
-  #       #   package_type: rolling
-  #   if: needs.check.outputs.SHOULD_DEPLOY == 'yes'
-
-  #   steps:
-  #     - name: Publish ${{ matrix.package_name }}
-  #       uses: zokugun/github-actions-aur-releaser@v1
-  #       with:
-  #         package_name: ${{ matrix.package_name }}
-  #         package_type: ${{ matrix.package_type }}
-  #         aur_private_key: ${{ secrets.AUR_PRIVATE_KEY }}
-  #         aur_username: ${{ secrets.AUR_USERNAME }}
-  #         aur_email: ${{ secrets.AUR_EMAIL }}
-
-  # Void commented this out:
-  # snap:
-  #   needs:
-  #     - check
-  #     - build
-  #   runs-on: ubuntu-latest
-  #   env:
-  #     RELEASE_VERSION: ${{ needs.check.outputs.RELEASE_VERSION }}
-  #     SNAP_NAME: void
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       platform:
-  #       - amd64
-  #       - arm64
-  #   if: needs.check.outputs.SHOULD_DEPLOY == 'yes' && needs.check.outputs.SHOULD_BUILD_SNAP != 'no' && vars.DISABLE_STABLE_SNAP != 'yes'
-
-  #   steps:
-  #     - uses: actions/checkout@v6
-  #       with:
-  #         ref: ${{ env.GITHUB_BRANCH }}
-
-  #     - name: Switch to relevant branch
-  #       env:
-  #         PULL_REQUEST_ID: ${{ github.event.inputs.checkout_pr }}
-  #       run: ./get_pr.sh
-
-  #     - name: Check version
-  #       env:
-  #         ARCHITECTURE: ${{ matrix.platform }}
-  #         GENERATE_ASSETS: ${{ github.event.inputs.generate_assets }}
-  #         SNAPCRAFT_STORE_CHANNEL: ${{ vars.SNAP_STORE_CHANNEL }}
-  #         SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
-  #       run: ./stores/snapcraft/check_version.sh
-
-  #     - uses: docker/setup-qemu-action@v3
-  #       if: env.SHOULD_BUILD == 'yes'
-
-  #     - uses: diddlesnaps/snapcraft-multiarch-action@v1
-  #       with:
-  #         path: stores/snapcraft/stable
-  #         architecture: ${{ matrix.platform }}
-  #       id: build
-  #       if: env.SHOULD_BUILD == 'yes'
-
-  #     - uses: diddlesnaps/snapcraft-review-action@v1
-  #       with:
-  #         snap: ${{ steps.build.outputs.snap }}
-  #         isClassic: 'true'
-  #       if: env.SHOULD_DEPLOY_TO_RELEASE == 'yes' || env.SHOULD_DEPLOY_TO_STORE == 'yes'
-
-  #     - uses: svenstaro/upload-release-action@v2
-  #       with:
-  #         repo_name: ${{ env.ASSETS_REPOSITORY }}
-  #         repo_token: ${{ secrets.STRONGER_GITHUB_TOKEN }}
-  #         file: ${{ steps.build.outputs.snap }}
-  #         tag: ${{ env.RELEASE_VERSION }}
-  #       if: env.SHOULD_DEPLOY_TO_RELEASE == 'yes'
-
-  #     - uses: snapcore/action-publish@master
-  #       env:
-  #         SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
-  #       with:
-  #         snap: ${{ steps.build.outputs.snap }}
-  #         release: ${{ vars.SNAP_STORE_CHANNEL }}
-  #       if: env.SHOULD_DEPLOY_TO_STORE == 'yes'
-
-  # deploy-repo-rudy:
-  #   needs:
-  #     - check
-  #     - build
-  #   runs-on: ubuntu-latest
-  #   if: needs.check.outputs.SHOULD_DEPLOY == 'yes' && github.event.inputs.generate_assets != 'true'
-
-  #   steps:
-  #     - name: Trigger repository rebuild
-  #       env:
-  #         GL_PAGES_TOKEN: ${{ secrets.GL_PAGES_TOKEN }}
-  #       run: curl -X POST --fail -F token="${GL_PAGES_TOKEN}" -F ref=master https://gitlab.com/api/v4/projects/8762263/trigger/pipeline
-
-  # deploy-repo-dev:
-  #   needs:
-  #     - check
-  #     - build
-  #   runs-on: ubuntu-latest
-  #   if: needs.check.outputs.SHOULD_DEPLOY == 'yes' && github.event.inputs.generate_assets != 'true'
-
-  #   steps:
-  #     - name: Trigger repository rebuild
-  #       uses: peter-evans/repository-dispatch@v3
-  #       with:
-  #         token: ${{ secrets.STRONGER_GITHUB_TOKEN }}
-  #         repository: VSCodium/repositories-linux
-  #         event-type: deploy

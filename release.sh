@@ -76,6 +76,56 @@ for FILE in *; do
       fi
     fi
 
+    # Post-Upload: Notify Website
+    # Env vars GRID_API_SECRET must be set in the runner
+    if [[ -f "../scripts/publish-release.js" ]]; then
+       echo "::group::Publishing to Website API"
+       # Determine platform/arch from filename for simplicity, or pass defaults
+       # We can try to guess or use env vars if available. 
+       # For now, let's assume we are standard windows x64 or similar, OR rely on filename parsing in the JS? 
+       # The JS expects: VERSION FILE_PATH CHANNEL PLATFORM ARCH
+       
+       # Extract platform/arch from filename or env?
+       # The builder seems to run per-platform. 
+       # Env vars: PLATFORM (set in build.sh? no, build.sh sets it but release.sh runs separate?)
+       # release.sh seems to run in the 'assets' dir where all assets are gathered?
+       # "cd assets" on line 40.
+       
+       # We might need to guess from filename.
+       # e.g. "GRID-x64-1.0.0.msi"
+       
+       NODE_PLATFORM="windows"
+       NODE_ARCH="x64"
+       
+       if [[ "${FILE}" == *"win32"* ]] || [[ "${FILE}" == *".exe"* ]] || [[ "${FILE}" == *".msi"* ]]; then
+         NODE_PLATFORM="windows"
+       elif [[ "${FILE}" == *"darwin"* ]] || [[ "${FILE}" == *".dmg"* ]] || [[ "${FILE}" == *".zip"* ]]; then
+         NODE_PLATFORM="darwin"
+       elif [[ "${FILE}" == *"linux"* ]] || [[ "${FILE}" == *".deb"* ]] || [[ "${FILE}" == *".rpm"* ]] || [[ "${FILE}" == *".AppImage"* ]]; then
+         NODE_PLATFORM="linux"
+       fi
+       
+       if [[ "${FILE}" == *"arm64"* ]]; then
+         NODE_ARCH="arm64"
+       else
+         NODE_ARCH="x64"
+       fi
+       
+       # Run the script
+       # ../scripts/publish-release.js is relative to 'assets' folder?
+       # On line 40 we did `cd assets`. So `../scripts` is correct if `scripts` is in root.
+       
+       CHANNEL="stable"
+       if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
+         CHANNEL="insiders"
+       fi
+       
+       # Pass ASSETS_REPOSITORY (owner/repo) so the script can construct the github download URL
+       node ../scripts/publish-release.js "${RELEASE_VERSION}" "${FILE}" "${CHANNEL}" "${NODE_PLATFORM}" "${NODE_ARCH}" "${ASSETS_REPOSITORY}" || echo "Website publish failed but ignoring to not break release"
+       
+       echo "::endgroup::"
+    fi
+
     echo "::endgroup::"
   fi
 done
