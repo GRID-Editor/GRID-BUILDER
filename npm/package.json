@@ -1,0 +1,22 @@
+{
+    "name": "@grid/cli",
+    "version": "0.1.0",
+    "description": "The command-line interface for GRID Editor",
+    "bin": {
+        "grid": "./bin/grid"
+    },
+    "scripts": {
+        "postinstall": "node scripts/install.js"
+    },
+    "dependencies": {
+        "axios": "^1.6.0",
+        "tar": "^6.2.0",
+        "unzipper": "^0.10.14"
+    },
+    "files": [
+        "bin",
+        "scripts"
+    ],
+    "author": "GRID Team",
+    "license": "MIT"
+}

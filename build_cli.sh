@@ -35,6 +35,17 @@ if [[ "${OS_NAME}" == "osx" ]]; then
   cargo build --release --target "${VSCODE_CLI_TARGET}" --bin=code
 
   cp "target/${VSCODE_CLI_TARGET}/release/code" "../../VSCode-darwin-${VSCODE_ARCH}/${NAME_SHORT}.app/Contents/Resources/app/bin/${TUNNEL_APPLICATION_NAME}"
+
+  # Create standalone CLI artifact for npm
+  CLI_ASSET_NAME="${APP_NAME_LC}-cli-darwin-${VSCODE_ARCH}.zip"
+  echo "Creating standalone CLI artifact: ${CLI_ASSET_NAME}"
+  
+  mkdir -p "target/${VSCODE_CLI_TARGET}/release/cli_pack"
+  cp "target/${VSCODE_CLI_TARGET}/release/code" "target/${VSCODE_CLI_TARGET}/release/cli_pack/${TUNNEL_APPLICATION_NAME}"
+  
+  pushd "target/${VSCODE_CLI_TARGET}/release/cli_pack"
+  zip -r "../../../../../../../assets/${CLI_ASSET_NAME}" "${TUNNEL_APPLICATION_NAME}"
+  popd
 elif [[ "${OS_NAME}" == "windows" ]]; then
   if [[ "${VSCODE_ARCH}" == "arm64" ]]; then
     VSCODE_CLI_TARGET="aarch64-pc-windows-msvc"
@@ -53,6 +64,22 @@ elif [[ "${OS_NAME}" == "windows" ]]; then
   cargo build --release --target "${VSCODE_CLI_TARGET}" --bin=code
 
   cp "target/${VSCODE_CLI_TARGET}/release/code.exe" "../../VSCode-win32-${VSCODE_ARCH}/bin/${TUNNEL_APPLICATION_NAME}.exe"
+
+  # Create standalone CLI artifact for npm
+  CLI_ASSET_NAME="${APP_NAME_LC}-cli-win32-${VSCODE_ARCH}.zip"
+  echo "Creating standalone CLI artifact: ${CLI_ASSET_NAME}"
+
+  mkdir -p "target/${VSCODE_CLI_TARGET}/release/cli_pack"
+  cp "target/${VSCODE_CLI_TARGET}/release/code.exe" "target/${VSCODE_CLI_TARGET}/release/cli_pack/${TUNNEL_APPLICATION_NAME}.exe"
+  
+  # Use 7z if available (standard in this build env), otherwise fallback or fail
+  # The ../../assets path is relative from current dir (cli), but we are effectively running from root or build
+  # assets dir is at root of repo. 'cli' is at root. so ../assets is correct from 'cli' dir.
+  # But we need to reference relative to where we run 7z.
+  
+  pushd "target/${VSCODE_CLI_TARGET}/release/cli_pack"
+  7z.exe a -tzip "../../../../../../../assets/${CLI_ASSET_NAME}" "${TUNNEL_APPLICATION_NAME}.exe"
+  popd
 else
   export OPENSSL_LIB_DIR="$( pwd )/openssl/out/${VSCODE_ARCH}-linux/lib"
   export OPENSSL_INCLUDE_DIR="$( pwd )/openssl/out/${VSCODE_ARCH}-linux/include"
@@ -88,7 +115,19 @@ else
 
     cargo build --release --target "${VSCODE_CLI_TARGET}" --bin=code
 
+    # Copy to the main app bundle
     cp "target/${VSCODE_CLI_TARGET}/release/code" "../../VSCode-linux-${VSCODE_ARCH}/bin/${TUNNEL_APPLICATION_NAME}"
+
+    # Create standalone CLI artifact for npm
+    CLI_ASSET_NAME="${APP_NAME_LC}-cli-linux-${VSCODE_ARCH}.tar.gz"
+    echo "Creating standalone CLI artifact: ${CLI_ASSET_NAME}"
+    
+    # Create a temporary directory for packing
+    mkdir -p "target/${VSCODE_CLI_TARGET}/release/cli_pack"
+    cp "target/${VSCODE_CLI_TARGET}/release/code" "target/${VSCODE_CLI_TARGET}/release/cli_pack/${TUNNEL_APPLICATION_NAME}"
+    
+    # Tar it up
+    tar -czf "../../assets/${CLI_ASSET_NAME}" -C "target/${VSCODE_CLI_TARGET}/release/cli_pack" "${TUNNEL_APPLICATION_NAME}"
   fi
 fi
 
