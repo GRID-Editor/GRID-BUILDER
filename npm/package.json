@@ -1,6 +1,6 @@
 {
     "name": "@grid/cli",
-    "version": "0.1.0",
+    "version": "0.9.1",
     "description": "The command-line interface for GRID Editor",
     "bin": {
         "grid": "./bin/grid"

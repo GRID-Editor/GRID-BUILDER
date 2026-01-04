@@ -51,7 +51,9 @@ MS_TAG=$( jq -r '.version' "package.json" )
 MS_COMMIT=$GRID_BRANCH # GRID - MS_COMMIT doesn't seem to do much
 GRID_VERSION=$( jq -r '.gridVersion' "product.json" ) # GRID - grid version from product.json
 
-if [[ -n "${GRID_RELEASE}" ]]; then # GRID - GRID_RELEASE as optional to bump manually
+if [[ -n "${GRID_VERSION}" ]]; then
+  RELEASE_VERSION="${GRID_VERSION}"
+elif [[ -n "${GRID_RELEASE}" ]]; then # GRID - GRID_RELEASE as optional to bump manually
   RELEASE_VERSION="${MS_TAG}${GRID_RELEASE}"
 else
   GRID_RELEASE=$( jq -r '.gridRelease' "product.json" )
