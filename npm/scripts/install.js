@@ -34,7 +34,7 @@ async function downloadBinary() {
     const version = 'latest';
     const ext = platform === 'linux' ? 'tar.gz' : 'zip';
     const fileName = `grid-cli-${currentPlatform}-${currentArch}.${ext}`;
-    const downloadUrl = `https://github.com/GRID-Editor/binaries/releases/latest/download/${fileName}`;
+    const downloadUrl = `https://github.com/millsydotdev/binaries/releases/latest/download/${fileName}`;
 
     console.log(`Downloading GRID CLI for ${currentPlatform}-${currentArch}...`);
 

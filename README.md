@@ -7,8 +7,8 @@ This is the build infrastructure for GRID, an AI-native code editor. The build p
 The GRID Builder repository runs [GitHub Actions](.github/workflows/) that:
 
 - Build all GRID assets (.dmg, .zip, .exe, .deb, .rpm, etc.)
-- Store binaries in the [`GRID-NETWORK/binaries`](https://github.com/GRID-Editor/binaries/releases) repository
-- Update version metadata in [`GRID-NETWORK/versions`](https://github.com/GRID-Editor/versions) so GRID knows how to auto-update
+- Store binaries in the [`GRID-NETWORK/binaries`](https://github.com/millsydotdev/binaries/releases) repository
+- Update version metadata in [`GRID-NETWORK/versions`](https://github.com/millsydotdev/versions) so GRID knows how to auto-update
 
 The `.patch` files remove telemetry and modify auto-update logic to check against GRID infrastructure instead of upstream VSCode.
 
