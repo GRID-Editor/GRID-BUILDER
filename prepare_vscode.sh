@@ -103,11 +103,11 @@ setpath "product" "introductoryVideosUrl" "https://go.microsoft.com/fwlink/?link
 setpath "product" "keyboardShortcutsUrlLinux" "https://go.microsoft.com/fwlink/?linkid=832144"
 setpath "product" "keyboardShortcutsUrlMac" "https://go.microsoft.com/fwlink/?linkid=832143"
 setpath "product" "keyboardShortcutsUrlWin" "https://go.microsoft.com/fwlink/?linkid=832145"
-setpath "product" "licenseUrl" "https://github.com/GRID-Editor/GRID/blob/main/LICENSE"
+setpath "product" "licenseUrl" "https://github.com/millsydotdev/GRID/blob/main/LICENSE"
 # setpath_json "product" "linkProtectionTrustedDomains" '["https://open-vsx.org"]'
 # setpath "product" "releaseNotesUrl" "https://go.microsoft.com/fwlink/?LinkID=533483#vscode"
-setpath "product" "reportIssueUrl" "https://github.com/GRID-Editor/GRID/issues/new"
-setpath "product" "requestFeatureUrl" "https://github.com/GRID-Editor/GRID/issues/new"
+setpath "product" "reportIssueUrl" "https://github.com/millsydotdev/GRID/issues/new"
+setpath "product" "requestFeatureUrl" "https://github.com/millsydotdev/GRID/issues/new"
 setpath "product" "tipsAndTricksUrl" "https://go.microsoft.com/fwlink/?linkid=852118"
 setpath "product" "twitterUrl" "https://x.com/grid_editor"
 

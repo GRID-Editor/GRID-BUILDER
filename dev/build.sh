@@ -6,9 +6,9 @@
 ###
 
 export APP_NAME="GRID"
-export BINARY_NAME="codium"
+export BINARY_NAME="GRID"
 export CI_BUILD="no"
-export GH_REPO_PATH="GRID-Editor/GRID"
+export GH_REPO_PATH="millsydotdev/GRID"
 export ORG_NAME="GRID-Editor"
 export SHOULD_BUILD="yes"
 export SKIP_ASSETS="yes"
