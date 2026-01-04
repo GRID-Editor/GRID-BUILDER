@@ -18,7 +18,7 @@ const ARCH_MAP = {
     'ia32': 'ia32'
 };
 
-const BINARY_NAME = platform === 'win32' ? 'grid.exe' : 'grid';
+const BINARY_NAME = platform === 'win32' ? 'GRID.exe' : 'GRID';
 
 async function downloadBinary() {
     const currentPlatform = PLATFORM_MAP[platform];
@@ -34,7 +34,7 @@ async function downloadBinary() {
     const version = 'latest';
     const ext = platform === 'linux' ? 'tar.gz' : 'zip';
     const fileName = `grid-cli-${currentPlatform}-${currentArch}.${ext}`;
-    const downloadUrl = `https://github.com/GRID-Editor/binaries/releases/latest/download/${fileName}`;
+    const downloadUrl = `https://github.com/millsydotdev/binaries/releases/latest/download/${fileName}`;
 
     console.log(`Downloading GRID CLI for ${currentPlatform}-${currentArch}...`);
 

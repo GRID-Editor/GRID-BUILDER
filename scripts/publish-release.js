@@ -13,7 +13,7 @@ const FILE_PATH = process.argv[3]; // e.g., ./out/grid-0.9.1-x64.msi
 const CHANNEL = process.argv[4] || 'stable'; // stable or insiders
 const PLATFORM = process.argv[5] || 'windows'; // windows, darwin, linux
 const ARCH = process.argv[6] || 'x64'; // x64, arm64
-const REPO = process.argv[7]; // e.g. GRID-Editor/GRID
+const REPO = process.argv[7]; // e.g. millsydotdev/GRID
 
 if (!VERSION || !FILE_PATH || !API_SECRET) {
     console.error('Usage: node publish-release.js <VERSION> <FILE_PATH> [CHANNEL] [PLATFORM] [ARCH] [REPO]');
