@@ -118,7 +118,7 @@ jobs:
             --recv-keys 2C277A0A352154E5 1E9377A2BA9EF27F
 
       - name: Setup Node.js environment
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: "20.18.2"
         if: env.SHOULD_BUILD == 'yes'
@@ -156,7 +156,7 @@ jobs:
         if: env.SHOULD_BUILD == 'yes'
 
       - name: Upload vscode artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: vscode
           path: ./vscode.tar.gz
@@ -244,7 +244,7 @@ jobs:
         if: env.DISABLED != 'yes' && env.SHOULD_BUILD == 'yes'
 
       - name: Download vscode artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: vscode
         if: env.DISABLED != 'yes' && env.SHOULD_BUILD == 'yes'
@@ -279,7 +279,7 @@ jobs:
         if: env.DISABLED != 'yes' && env.SHOULD_BUILD == 'yes' && env.SHOULD_DEPLOY == 'yes'
 
       - name: Upload assets
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: bin-${{ matrix.vscode_arch }}
           path: assets/
@@ -347,7 +347,7 @@ jobs:
         if: env.DISABLED != 'yes'
 
       - name: Setup Node.js environment
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: "20.18.2"
         if: env.DISABLED != 'yes'
@@ -374,7 +374,7 @@ jobs:
         if: env.DISABLED != 'yes'
 
       - name: Download vscode artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: vscode
         if: env.DISABLED != 'yes' && (env.SHOULD_BUILD_REH != 'no' || env.SHOULD_BUILD_REH_WEB != 'no' || github.event.inputs.generate_assets == 'true')
@@ -395,7 +395,7 @@ jobs:
         if: env.DISABLED != 'yes' && env.SHOULD_DEPLOY == 'yes' && (env.SHOULD_BUILD_REH != 'no' || env.SHOULD_BUILD_REH_WEB != 'no')
 
       - name: Upload assets
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: reh-linux-${{ matrix.vscode_arch }}
           path: assets/
@@ -460,7 +460,7 @@ jobs:
         if: env.SHOULD_BUILD == 'yes'
 
       - name: Download vscode artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: vscode
         if: env.DISABLED != 'yes' && (env.SHOULD_BUILD_REH != 'no' || env.SHOULD_BUILD_REH_WEB != 'no' || github.event.inputs.generate_assets == 'true')
@@ -480,7 +480,7 @@ jobs:
         if: env.DISABLED != 'yes' && env.SHOULD_DEPLOY == 'yes' && (env.SHOULD_BUILD_REH != 'no' || env.SHOULD_BUILD_REH_WEB != 'no')
 
       - name: Upload assets
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: reh-alpine-${{ matrix.vscode_arch }}
           path: assets/
