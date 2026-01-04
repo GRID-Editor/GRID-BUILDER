@@ -21,14 +21,14 @@ on:
   repository_dispatch:
     types: [stable]
   push:
-    branches: [ master ]
+    branches: [master]
     paths-ignore:
-    - '**/*.md'
-    - 'upstream/*.json'
+      - "**/*.md"
+      - "upstream/*.json"
   pull_request:
-    branches: [ master ]
+    branches: [master]
     paths-ignore:
-    - '**/*.md'
+      - "**/*.md"
 
 env:
   APP_NAME: Void
@@ -51,7 +51,7 @@ jobs:
       SHOULD_DEPLOY: ${{ env.SHOULD_DEPLOY }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           ref: ${{ env.GITHUB_BRANCH }}
 
@@ -74,7 +74,7 @@ jobs:
       - name: Check existing VSCodium tags/releases
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CHECK_ALL: 'yes'
+          CHECK_ALL: "yes"
         run: ./check_tags.sh
 
   compile:
@@ -86,12 +86,12 @@ jobs:
       MS_TAG: ${{ needs.check.outputs.MS_TAG }}
       RELEASE_VERSION: ${{ needs.check.outputs.RELEASE_VERSION }}
       SHOULD_BUILD: ${{ (needs.check.outputs.SHOULD_BUILD == 'yes' || github.event.inputs.generate_assets == 'true') && 'yes' || 'no' }}
-      VSCODE_ARCH: 'x64'
+      VSCODE_ARCH: "x64"
     outputs:
       BUILD_SOURCEVERSION: ${{ env.BUILD_SOURCEVERSION }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           ref: ${{ env.GITHUB_BRANCH }}
         if: env.SHOULD_BUILD == 'yes'
@@ -108,15 +108,15 @@ jobs:
           platform: x64
 
       - name: Setup Node.js environment
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.18.2'
+          node-version: "20.18.2"
         if: env.SHOULD_BUILD == 'yes'
 
       - name: Setup Python 3
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
         if: env.SHOULD_BUILD == 'yes'
 
       - name: Install libkrb5-dev
@@ -132,8 +132,8 @@ jobs:
 
       - name: Build
         env:
-          SHOULD_BUILD_REH: 'no'
-          SHOULD_BUILD_REH_WEB: 'no'
+          SHOULD_BUILD_REH: "no"
+          SHOULD_BUILD_REH_WEB: "no"
         run: ./build.sh
         if: env.SHOULD_BUILD == 'yes'
 
@@ -146,7 +146,7 @@ jobs:
         if: env.SHOULD_BUILD == 'yes'
 
       - name: Upload vscode artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: vscode
           path: ./vscode.tar.gz
@@ -180,7 +180,7 @@ jobs:
       SHOULD_DEPLOY: ${{ env.SHOULD_DEPLOY }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           ref: ${{ env.GITHUB_BRANCH }}
         if: env.SHOULD_BUILD == 'yes'
@@ -192,15 +192,15 @@ jobs:
         if: env.SHOULD_BUILD == 'yes'
 
       - name: Setup Node.js environment
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.18.2'
+          node-version: "20.18.2"
         if: env.SHOULD_BUILD == 'yes'
 
       - name: Setup Python 3
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
         if: env.SHOULD_BUILD == 'yes'
 
       - name: Check existing VSCodium tags/releases
@@ -211,7 +211,7 @@ jobs:
         if: env.SHOULD_BUILD == 'yes'
 
       - name: Download vscode artifact
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v4
         with:
           name: vscode
         if: env.SHOULD_BUILD == 'yes'
@@ -231,7 +231,7 @@ jobs:
       # Void commented this - we should re-add it eventually
       # - name: Upload unsigned artifacts
       #   id: upload-unsigned-artifacts
-      #   uses: actions/upload-artifact@v6
+      #   uses: actions/upload-artifact@v4
       #   with:
       #     name: unsigned-${{ matrix.vscode_arch }}
       #     path: |
@@ -274,7 +274,7 @@ jobs:
         if: env.SHOULD_BUILD == 'yes' && env.SHOULD_DEPLOY == 'yes'
 
       - name: Upload assets
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: bin-${{ matrix.vscode_arch }}
           path: assets/
@@ -292,22 +292,22 @@ jobs:
   #     APP_IDENTIFIER: VSCodium.VSCodium
   #   if: needs.build.outputs.SHOULD_DEPLOY == 'yes'
 
-    # steps:
-    #   - uses: actions/checkout@v6
-    #     with:
-    #       ref: ${{ env.GITHUB_BRANCH }}
+  # steps:
+  #   - uses: actions/checkout@v4
+  #     with:
+  #       ref: ${{ env.GITHUB_BRANCH }}
 
-      # - name: Check version
-      #   run: ./stores/winget/check_version.sh
-      #   env:
-      #     RELEASE_VERSION: ${{ needs.build.outputs.RELEASE_VERSION }}
+  # - name: Check version
+  #   run: ./stores/winget/check_version.sh
+  #   env:
+  #     RELEASE_VERSION: ${{ needs.build.outputs.RELEASE_VERSION }}
 
-      # - name: Release to WinGet
-      #   uses: vedantmgoyal9/winget-releaser@main
-      #   with:
-      #     identifier: ${{ env.APP_IDENTIFIER }}
-      #     version: ${{ env.RELEASE_VERSION }}
-      #     release-tag: ${{ env.RELEASE_VERSION }}
-      #     installers-regex: '\.exe$' # only .exe files
-      #     token: ${{ secrets.STRONGER_GITHUB_TOKEN }}
-      #   if: env.SHOULD_DEPLOY == 'yes'
+  # - name: Release to WinGet
+  #   uses: vedantmgoyal9/winget-releaser@main
+  #   with:
+  #     identifier: ${{ env.APP_IDENTIFIER }}
+  #     version: ${{ env.RELEASE_VERSION }}
+  #     release-tag: ${{ env.RELEASE_VERSION }}
+  #     installers-regex: '\.exe$' # only .exe files
+  #     token: ${{ secrets.STRONGER_GITHUB_TOKEN }}
+  #   if: env.SHOULD_DEPLOY == 'yes'

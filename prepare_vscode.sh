@@ -34,37 +34,6 @@ echo "ORG_NAME=\"${ORG_NAME}\""
 
 echo "GRID-SPECIFIC: Skipping patch application - GRID is already customized"
 # Patches disabled for GRID builds - uncomment below if needed for VSCodium-style builds
-#echo "Applying patches at ../patches/*.patch..." # GRID comment
-#for file in ../patches/*.patch; do
-#  if [[ -f "${file}" ]]; then
-#    apply_patch "${file}"
-#  fi
-#done
-#
-#if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
-#  echo "Applying insider patches..." # GRID comment
-#  for file in ../patches/insider/*.patch; do
-#    if [[ -f "${file}" ]]; then
-#      apply_patch "${file}"
-#    fi
-#  done
-#fi
-#
-#if [[ -d "../patches/${OS_NAME}/" ]]; then
-#  echo "Applying OS patches (${OS_NAME})..." # GRID comment
-#  for file in "../patches/${OS_NAME}/"*.patch; do
-#    if [[ -f "${file}" ]]; then
-#      apply_patch "${file}"
-#    fi
-#  done
-#fi
-#
-#echo "Applying user patches..." # GRID comment
-#for file in ../patches/user/*.patch; do
-#  if [[ -f "${file}" ]]; then
-#    apply_patch "${file}"
-#  fi
-#done
 
 set -x
 

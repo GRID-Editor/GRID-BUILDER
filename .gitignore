@@ -16,3 +16,15 @@ build/windows/msi/Files*.wxs
 build/windows/msi/Files*.wixobj
 stores/snapcraft/insider/*.snap
 stores/snapcraft/stable/*.snap
+# Standard Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+.env
+.DS_Store
+Thumbs.db
+
+# Build output
+dist/
+out/
+build/
