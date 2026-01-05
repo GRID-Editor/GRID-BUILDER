@@ -20,7 +20,14 @@ if [[ "${SHOULD_BUILD}" == "yes" ]]; then
   # npm run monaco-compile-check
   # npm run valid-layers-check
 
+
+  export PATH="$(pwd)/node_modules/.bin:$PATH"
+  echo "Checking for tailwindcss..."
+  ls -la node_modules/.bin/tailwind* || echo "Tailwind binary not found in node_modules/.bin"
+  npm list tailwindcss || echo "Tailwind package not listed in npm list"
+
   npm run buildreact
+
   npm run gulp compile-build-without-mangling
   npm run gulp compile-extension-media
   npm run gulp compile-extensions-build
