@@ -13,6 +13,11 @@ set -e
 #   cp -rp src/stable/* vscode/
 # fi
 
+# GRID - Inject GRID Cloud extension
+echo "Injecting GRID Cloud extension..."
+cp -r extensions/grid-cloud vscode/extensions/
+
+
 # GRID - keep our license...
 # cp -f LICENSE vscode/LICENSE.txt
 

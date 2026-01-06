@@ -1,13 +1,26 @@
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
-const http = require('http');
-const https = require('https');
+// @ts-check
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const http = require('node:http');
+const https = require('node:https');
 
-// Configuration - Load from environment variables
+/**
+ * @typedef {Object} ReleaseData
+ * @property {string} version
+ * @property {string} channel
+ * @property {string} platform
+ * @property {string} arch
+ * @property {string} url
+ * @property {string} sha256
+ * @property {string} published_at
+ */
+
 // Configuration - Load from environment variables
 const API_URL = process.env.GRID_API_URL || 'https://grideditor.com/api/releases';
 const API_SECRET = process.env.GRID_API_SECRET;
+
+// Arguments
 const VERSION = process.argv[2]; // e.g., 0.9.1
 const FILE_PATH = process.argv[3]; // e.g., ./out/grid-0.9.1-x64.msi
 const CHANNEL = process.argv[4] || 'stable'; // stable or insiders
@@ -15,14 +28,22 @@ const PLATFORM = process.argv[5] || 'windows'; // windows, darwin, linux
 const ARCH = process.argv[6] || 'x64'; // x64, arm64
 const REPO = process.argv[7]; // e.g. millsydotdev/GRID
 
-if (!VERSION || !FILE_PATH || !API_SECRET) {
+if (!VERSION || !FILE_PATH) {
     console.error('Usage: node publish-release.js <VERSION> <FILE_PATH> [CHANNEL] [PLATFORM] [ARCH] [REPO]');
     console.error('Environment variable GRID_API_SECRET is required.');
     process.exit(1);
 }
 
-// ... (calculateChecksum function remains same)
+if (!API_SECRET) {
+    console.error('❌ Error: GRID_API_SECRET environment variable is not set.');
+    process.exit(1);
+}
 
+/**
+ * Calculates SHA256 checksum of a file
+ * @param {string} filePath
+ * @returns {Promise<string>}
+ */
 async function calculateChecksum(filePath) {
     return new Promise((resolve, reject) => {
         const hash = crypto.createHash('sha256');
@@ -34,8 +55,11 @@ async function calculateChecksum(filePath) {
     });
 }
 
-
-// ... (publishRelease function remains same)
+/**
+ * Publishes release data to the API
+ * @param {ReleaseData} releaseData
+ * @returns {Promise<any>}
+ */
 async function publishRelease(releaseData) {
     return new Promise((resolve, reject) => {
         const url = new URL(API_URL);
@@ -57,8 +81,12 @@ async function publishRelease(releaseData) {
             });
 
             res.on('end', () => {
-                if (res.statusCode >= 200 && res.statusCode < 300) {
-                    resolve(JSON.parse(data));
+                if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
+                    try {
+                        resolve(JSON.parse(data));
+                    } catch (e) {
+                        resolve({}); // eslint-disable-line no-empty
+                    }
                 } else {
                     reject(new Error(`API responded with status ${res.statusCode}: ${data}`));
                 }
@@ -74,7 +102,6 @@ async function publishRelease(releaseData) {
     });
 }
 
-
 async function main() {
     try {
         console.log(`Processing release for GRID v${VERSION} (${CHANNEL})...`);
@@ -88,25 +115,17 @@ async function main() {
         console.log(`SHA256: ${checksum}`);
 
         // Construct download URL
-        // We use the official GitHub Releases URL to avoid custom subdomains
         const filename = path.basename(FILE_PATH);
         let downloadUrl;
 
         if (REPO) {
-            // Standard GitHub Release URL format
-            // https://github.com/{owner}/{repo}/releases/download/{tag}/{filename}
-            // Note: Tag usually matches version or v{version}. release.sh uses RELEASE_VERSION which is passed in?
-            // release.sh passes `RELEASE_VERSION` as arg 1 (which refers to tag usually)
-            // Wait, process.argv[2] is VERSION.
-            // In release.sh, we pass RELEASE_VERSION.
-
             downloadUrl = `https://github.com/${REPO}/releases/download/${VERSION}/${filename}`;
         } else {
-            // Fallback if no repo provided?? Should validly fail or use a placeholder?
-            console.warn("No REPO provided, using generic placeholder.");
-            downloadUrl = `https://grideditor.com/downloads/${filename}`; // Placeholder
+            console.warn("⚠️ No REPO provided, using generic placeholder.");
+            downloadUrl = `https://grideditor.com/downloads/${filename}`;
         }
 
+        /** @type {ReleaseData} */
         const releaseData = {
             version: VERSION,
             channel: CHANNEL,
@@ -122,6 +141,7 @@ async function main() {
 
         console.log('✅ Release published successfully!');
     } catch (error) {
+        // @ts-ignore
         console.error('❌ Failed to publish release:', error.message);
         process.exit(1);
     }
