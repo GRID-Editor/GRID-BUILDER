@@ -31,17 +31,22 @@ echo "DEBUG: Cleaning vscode dir"
 rm -rf vscode
 
 # Clone the repository
+CLONE_URL="https://github.com/millsydotdev/GRID.git"
+if [[ -n "${AUTH_TOKEN}" ]]; then
+  CLONE_URL="https://x-access-token:${AUTH_TOKEN}@github.com/millsydotdev/GRID.git"
+fi
+
 if [[ -n "${GRID_COMMIT}" ]]; then
   echo "Cloning specific commit ${GRID_COMMIT}..."
   mkdir -p vscode
   cd vscode || exit 1
   git init -q
-  git remote add origin https://github.com/millsydotdev/GRID.git
+  git remote add origin "${CLONE_URL}"
   git fetch --depth 1 origin "${GRID_COMMIT}"
   git checkout "${GRID_COMMIT}"
 else
   echo "Cloning branch ${GRID_BRANCH}..."
-  git clone -c http.extraheader="" -c credential.helper="" --depth 1 --branch "${GRID_BRANCH}" https://github.com/millsydotdev/GRID.git vscode
+  git clone -c http.extraheader="" -c credential.helper="" --depth 1 --branch "${GRID_BRANCH}" "${CLONE_URL}" vscode
   cd vscode || { echo "'vscode' dir not found"; exit 1; }
 fi
 
