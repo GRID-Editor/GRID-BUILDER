@@ -47,10 +47,10 @@ git remote add origin https://github.com/millsydotdev/GRID.git
 if [[ -n "${GRID_COMMIT}" ]]; then
   echo "Using explicit commit ${GRID_COMMIT}"
   # Fetch just that commit to keep the clone shallow.
-  git -c http.extraheader="" fetch --depth 1 origin "${GRID_COMMIT}"
+  git -c http.extraheader="" -c credential.helper="" fetch --depth 1 origin "${GRID_COMMIT}"
   git checkout "${GRID_COMMIT}"
 else
-  git -c http.extraheader="" fetch --depth 1 origin "${GRID_BRANCH}"
+  git -c http.extraheader="" -c credential.helper="" fetch --depth 1 origin "${GRID_BRANCH}"
   git checkout FETCH_HEAD
 fi
 
