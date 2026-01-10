@@ -41,7 +41,7 @@ if [[ -n "${GRID_COMMIT}" ]]; then
   git checkout "${GRID_COMMIT}"
 else
   echo "Cloning branch ${GRID_BRANCH}..."
-  git clone --depth 1 --branch "${GRID_BRANCH}" https://github.com/millsydotdev/GRID.git vscode
+  git clone -c http.extraheader="" -c credential.helper="" --depth 1 --branch "${GRID_BRANCH}" https://github.com/millsydotdev/GRID.git vscode
   cd vscode || { echo "'vscode' dir not found"; exit 1; }
 fi
 
