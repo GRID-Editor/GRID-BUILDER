@@ -29,8 +29,9 @@ echo "Cloning GRID ${GRID_BRANCH}..."
 mkdir -p vscode
 cd vscode || { echo "'vscode' dir not found"; exit 1; }
 
-git init -q
 git config --local --unset-all http.https://github.com/.extraheader || true
+git config --local --unset-all http.extraheader || true
+
 git remote add origin https://github.com/millsydotdev/GRID.git
 
 # Allow callers to specify a particular commit to checkout via the
@@ -41,10 +42,10 @@ git remote add origin https://github.com/millsydotdev/GRID.git
 if [[ -n "${GRID_COMMIT}" ]]; then
   echo "Using explicit commit ${GRID_COMMIT}"
   # Fetch just that commit to keep the clone shallow.
-  git fetch --depth 1 origin "${GRID_COMMIT}"
+  git -c http.extraheader="" fetch --depth 1 origin "${GRID_COMMIT}"
   git checkout "${GRID_COMMIT}"
 else
-  git fetch --depth 1 origin "${GRID_BRANCH}"
+  git -c http.extraheader="" fetch --depth 1 origin "${GRID_BRANCH}"
   git checkout FETCH_HEAD
 fi
 
