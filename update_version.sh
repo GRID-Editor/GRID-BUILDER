@@ -1,22 +1,33 @@
 #!/usr/bin/env bash
+# GRID Builder - Version Metadata Update Script
+# Updates the versions repository with release metadata for auto-update functionality
+# This script requires GitHub authentication and is optional for local builds
 # shellcheck disable=SC1091
 
 set -e
 
+echo "[update_version.sh] GRID Version Metadata Updater"
+echo "[update_version.sh] This script updates the versions repository for auto-update functionality"
+
+# Check if we should update
 if [[ "${SHOULD_BUILD}" != "yes" && "${FORCE_UPDATE}" != "true" ]]; then
-  echo "Will not update version JSON because we did not build"
+  echo "[update_version.sh] Skipping: no build was performed (SHOULD_BUILD != yes)"
   exit 0
 fi
 
+# Check for GitHub token (required for updating remote repository)
 if [[ -z "${GH_TOKEN}" ]] && [[ -z "${GITHUB_TOKEN}" ]] && [[ -z "${GH_ENTERPRISE_TOKEN}" ]] && [[ -z "${GITHUB_ENTERPRISE_TOKEN}" ]]; then
-  echo "Will not update version JSON because no GITHUB_TOKEN defined"
+  echo "[update_version.sh] Skipping: no GITHUB_TOKEN provided"
+  echo "[update_version.sh] This is optional for local builds - version metadata is only needed for auto-updates"
   exit 0
 else
   GITHUB_TOKEN="${GH_TOKEN:-${GITHUB_TOKEN:-${GH_ENTERPRISE_TOKEN:-${GITHUB_ENTERPRISE_TOKEN}}}}"
+  echo "[update_version.sh] GitHub token found, will update versions repository"
 fi
 
 # Support for GitHub Enterprise
 GH_HOST="${GH_HOST:-github.com}"
+echo "[update_version.sh] Using host: ${GH_HOST}"
 
 if [[ "${FORCE_UPDATE}" == "true" ]]; then
   . version.sh

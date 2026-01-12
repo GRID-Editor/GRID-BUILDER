@@ -1,4 +1,28 @@
-# How to build VSCodium
+# How to build GRID IDE
+
+> **⚠️ This document is deprecated.**
+>
+> Please refer to **[BUILDING.md](./BUILDING.md)** for comprehensive and up-to-date build instructions for GRID IDE.
+
+The comprehensive build guide includes:
+- Complete environment variable documentation
+- Platform-specific instructions (Linux, macOS, Windows)
+- Dependencies and system requirements
+- Troubleshooting guide
+- Build options and configurations
+- Development workflow tips
+
+## Quick Links
+
+- **[BUILDING.md](./BUILDING.md)** - Complete build guide
+- **[README.md](../README.md)** - Repository overview
+- **[troubleshooting.md](./troubleshooting.md)** - Common issues and solutions
+
+---
+
+## Legacy VSCodium Build Instructions
+
+The following instructions are kept for historical reference but may be outdated for GRID IDE builds.
 
 ## Table of Contents
 
