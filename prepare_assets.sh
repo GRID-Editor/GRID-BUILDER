@@ -1,11 +1,29 @@
 #!/usr/bin/env bash
+# GRID Builder - Asset Packaging Script
+# Creates distributable packages (.dmg, .deb, .rpm, .exe, .msi, .zip, AppImage, etc.)
+# Works in standalone mode or any CI/CD system
+#
+# This script takes compiled binaries and packages them into platform-specific
+# installers and archives for distribution.
+#
+# Platform-specific builds:
+#   - Linux: .deb, .rpm, .tar.gz, AppImage, snap
+#   - macOS: .dmg, .zip (with optional code signing and notarization)
+#   - Windows: .exe installers, .msi, .zip
+#
+# Environment variables control which assets are built (see docs/BUILDING.md)
+#
 # shellcheck disable=SC1091
 
 set -e
 
+echo "[prepare_assets.sh] GRID Asset Packaging System"
+echo "[prepare_assets.sh] Creating distributable packages..."
+
 APP_NAME_LC="$( echo "${APP_NAME}" | awk '{print tolower($0)}' )"
 
 mkdir -p assets
+echo "[prepare_assets.sh] Assets directory created/verified"
 
 if [[ "${OS_NAME}" == "osx" ]]; then
   if [[ -n "${CERTIFICATE_OSX_P12_DATA}" ]]; then

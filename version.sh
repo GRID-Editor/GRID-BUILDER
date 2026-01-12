@@ -1,27 +1,34 @@
 #!/usr/bin/env bash
+# GRID Builder - Version Detection Script
+# Works in standalone mode, GitHub Actions, or any CI/CD system
 
 if [[ -z "${BUILD_SOURCEVERSION}" ]]; then
+    echo "[version.sh] Detecting build source version..."
 
-    # GRID-IDE updated this to use the BUILD_SOURCEVERSION with gridVersion
-    echo "running version.sh"
-    # Check if vscode directory exists
+    # Check if vscode directory exists (post-checkout)
     if [[ -d "./vscode" ]]; then
-        echo "getting vscode source version..."
+        echo "[version.sh] Using vscode git commit as BUILD_SOURCEVERSION"
         # Get the current commit hash from the vscode repository
-        CURRENT_DIR=$(pwd)
-        cd ./vscode
+        cd ./vscode || exit 1
         BUILD_SOURCEVERSION=$(git rev-parse HEAD)
         cd ..
     else
-      npm install -g checksum
+        echo "[version.sh] vscode directory not found, generating checksum from RELEASE_VERSION"
 
-      BUILD_SOURCEVERSION=$( echo "${RELEASE_VERSION/-*/}" | checksum )
+        # Install checksum utility if not available
+        if ! command -v checksum &> /dev/null; then
+            echo "[version.sh] Installing checksum utility..."
+            npm install -g checksum
+        fi
+
+        BUILD_SOURCEVERSION=$( echo "${RELEASE_VERSION/-*/}" | checksum )
     fi
 
-    echo "BUILD_SOURCEVERSION=\"${BUILD_SOURCEVERSION}\""
+    echo "[version.sh] BUILD_SOURCEVERSION=\"${BUILD_SOURCEVERSION}\""
 
-    # for GH actions
-    if [[ "${GITHUB_ENV}" ]]; then
+    # Export to GitHub Actions environment if running in GHA
+    if [[ -n "${GITHUB_ENV}" ]]; then
+        echo "[version.sh] Detected GitHub Actions, exporting to GITHUB_ENV"
         echo "BUILD_SOURCEVERSION=${BUILD_SOURCEVERSION}" >> "${GITHUB_ENV}"
     fi
 fi

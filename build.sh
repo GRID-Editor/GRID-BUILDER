@@ -1,7 +1,25 @@
 #!/usr/bin/env bash
+# GRID Builder - Main Build Script
+# Compiles GRID IDE from VSCode source with GRID customizations
+# Works in standalone mode or any CI/CD system (GitHub Actions, GitLab CI, etc.)
+#
+# Required environment variables:
+#   - VSCODE_QUALITY: "stable" or "insider"
+#   - OS_NAME: "linux", "osx", or "windows"
+#   - VSCODE_ARCH: "x64", "arm64", "armhf", or "ia32"
+#   - RELEASE_VERSION: Version string (e.g., "1.96.0")
+#
+# Optional environment variables:
+#   - CI_BUILD: "yes" for CI, "no" for local builds (default: "yes")
+#   - SHOULD_BUILD: "yes" to build, "no" to skip (default: "yes")
+#   - NODE_OPTIONS: Node.js memory options (default set below)
+#
 # shellcheck disable=SC1091
 
 set -ex
+
+echo "[build.sh] GRID IDE Build System"
+echo "[build.sh] Starting compilation process..."
 
 . version.sh
 

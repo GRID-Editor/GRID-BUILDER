@@ -1,17 +1,40 @@
 #!/usr/bin/env bash
+# GRID Builder - Utility Functions and Environment Defaults
+# This script provides common functions and sets default environment variables
+# for the GRID build system. It works in standalone, GitHub Actions, or any CI/CD system.
 
+# Application identity
 APP_NAME="${APP_NAME:-GRID}"
 APP_NAME_LC="$( echo "${APP_NAME}" | awk '{print tolower($0)}' )"
 BINARY_NAME="${BINARY_NAME:-GRID}"
+
+# Repository configuration
 GH_REPO_PATH="${GH_REPO_PATH:-millsydotdev/GRID-BUILDER}"
 ORG_NAME="${ORG_NAME:-GRID-Editor}"
+ASSETS_REPOSITORY="${ASSETS_REPOSITORY:-${GITHUB_REPOSITORY_OWNER:-millsydotdev}/binaries}"
+VERSIONS_REPOSITORY="${VERSIONS_REPOSITORY:-${GITHUB_REPOSITORY_OWNER:-millsydotdev}/versions}"
 
-echo "---------- utils.sh -----------"
+# Build configuration defaults
+CI_BUILD="${CI_BUILD:-yes}"
+DISABLE_UPDATE="${DISABLE_UPDATE:-yes}"
+SHOULD_BUILD="${SHOULD_BUILD:-yes}"
+
+# Build toggles (default to yes if not specified)
+SHOULD_BUILD_ZIP="${SHOULD_BUILD_ZIP:-yes}"
+SHOULD_BUILD_REH="${SHOULD_BUILD_REH:-yes}"
+SHOULD_BUILD_REH_WEB="${SHOULD_BUILD_REH_WEB:-yes}"
+
+echo "---------- GRID Builder Utils -----------"
 echo "APP_NAME=\"${APP_NAME}\""
 echo "APP_NAME_LC=\"${APP_NAME_LC}\""
 echo "BINARY_NAME=\"${BINARY_NAME}\""
 echo "GH_REPO_PATH=\"${GH_REPO_PATH}\""
 echo "ORG_NAME=\"${ORG_NAME}\""
+echo "CI_BUILD=\"${CI_BUILD}\""
+echo "VSCODE_QUALITY=\"${VSCODE_QUALITY:-stable}\""
+echo "OS_NAME=\"${OS_NAME:-linux}\""
+echo "VSCODE_ARCH=\"${VSCODE_ARCH:-x64}\""
+echo "----------------------------------------"
 
 # All common functions can be added to this file
 
