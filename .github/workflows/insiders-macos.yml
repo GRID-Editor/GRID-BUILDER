@@ -14,10 +14,10 @@ on:
       checkout_pr:
         type: string
         description: Checkout PR
-      void_commit: # Void added this
+      grid_commit: # GRID
         type: string
-        description: Checkout specific Void commit
-      void_release: # Void added this
+        description: Checkout specific GRID commit
+      grid_release: # GRID
         type: string
         description: Custom release number
   repository_dispatch:
@@ -35,7 +35,7 @@ on:
 env:
   APP_NAME: GRID
   # ASSETS_REPOSITORY is where all the downloads are.
-  # VSCodium has this be the current repo, voideditor/void-builder:
+  # GRID: The binaries repository, millsydotdev/GRID-BUILDER:
   # ASSETS_REPOSITORY: ${{ github.repository }}
 
   ASSETS_REPOSITORY: ${{ github.repository_owner }}/binaries
@@ -88,9 +88,9 @@ jobs:
         run: brew install vips
 
       - name: Clone VSCode repo
-        env: # Void added this
-          VOID_COMMIT: ${{ github.event.inputs.void_commit }} # Void added this
-          VOID_RELEASE: ${{ github.event.inputs.void_release }} # Void added this
+        env: # GRID
+          GRID_COMMIT: ${{ github.event.inputs.grid_commit }} # GRID
+          GRID_RELEASE: ${{ github.event.inputs.grid_release }} # GRID
         run: . get_repo.sh
 
       - name: Check PR or cron
@@ -98,7 +98,7 @@ jobs:
           GENERATE_ASSETS: ${{ github.event.inputs.generate_assets }}
         run: . check_cron_or_pr.sh
 
-      - name: Check existing VSCodium tags/releases
+      - name: Check existing GRID tags/releases
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: . check_tags.sh
@@ -122,7 +122,7 @@ jobs:
 
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.STRONGER_GITHUB_TOKEN }} # Void bumped this to stronger
+          GITHUB_TOKEN: ${{ secrets.STRONGER_GITHUB_TOKEN }} # GRID
         run: ./release.sh
         if: env.SHOULD_BUILD == 'yes' && env.SHOULD_DEPLOY == 'yes'
 

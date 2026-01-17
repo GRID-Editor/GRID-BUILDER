@@ -14,6 +14,6 @@ cp target/aarch64-apple-darwin/release/code "../../VSCode-darwin-arm64/GRID.app/
 
 # cargo build --release --target aarch64-apple-darwin --bin=code
 
-# cp target/aarch64-apple-darwin/release/code "../../VSCode-darwin-arm64/VSCodium - Insiders.app/Contents/Resources/app/bin/codium-tunnel-insiders"
+# cp target/aarch64-apple-darwin/release/code "../../VSCode-darwin-arm64/GRID-Insiders.app/Contents/Resources/app/bin/grid-tunnel-insiders"
 
-# "../../VSCode-darwin-arm64/VSCodium - Insiders.app/Contents/Resources/app/bin/codium-insiders" serve-web
+# "../../VSCode-darwin-arm64/GRID-Insiders.app/Contents/Resources/app/bin/grid-insiders" serve-web

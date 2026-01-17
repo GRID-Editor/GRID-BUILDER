@@ -12,10 +12,10 @@ on:
       checkout_pr:
         type: string
         description: Checkout PR
-      void_commit: # Void added this
+      grid_commit: # GRID
         type: string
-        description: Checkout specific Void commit
-      void_release: # Void added this
+        description: Checkout specific GRID commit
+      grid_release: # GRID
         type: string
         description: Custom release number
   repository_dispatch:
@@ -66,9 +66,9 @@ jobs:
         run: ./get_pr.sh
 
       - name: Clone VSCode repo
-        env: # Void added this
-          VOID_COMMIT: ${{ github.event.inputs.void_commit }} # Void added this
-          VOID_RELEASE: ${{ github.event.inputs.void_release }} # Void added this
+        env: # GRID
+          GRID_COMMIT: ${{ github.event.inputs.grid_commit }} # GRID
+          GRID_RELEASE: ${{ github.event.inputs.grid_release }} # GRID
         run: ./get_repo.sh
 
       - name: Check PR or cron
@@ -76,7 +76,7 @@ jobs:
           GENERATE_ASSETS: ${{ github.event.inputs.generate_assets }}
         run: ./check_cron_or_pr.sh
 
-      - name: Check existing VSCodium tags/releases
+      - name: Check existing GRID tags/releases
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CHECK_ALL: "yes"
@@ -114,7 +114,7 @@ jobs:
           platform: x64
         if: env.SHOULD_BUILD == 'yes'
 
-      # Void added this to fix annoying errors
+      # GRID to fix annoying errors
       - name: Add ubuntu-toolchain-r PPA keys
         run: |
           sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 \
@@ -137,9 +137,9 @@ jobs:
         if: env.SHOULD_BUILD == 'yes'
 
       - name: Clone VSCode repo
-        env: # Void added this
-          VOID_COMMIT: ${{ github.event.inputs.void_commit }} # Void added this
-          VOID_RELEASE: ${{ github.event.inputs.void_release }} # Void added this
+        env: # GRID
+          GRID_COMMIT: ${{ github.event.inputs.grid_commit }} # GRID
+          GRID_RELEASE: ${{ github.event.inputs.grid_release }} # GRID
         run: ./get_repo.sh
         if: env.SHOULD_BUILD == 'yes'
 
@@ -231,7 +231,7 @@ jobs:
         run: ./install_gh.sh
         if: env.DISABLED != 'yes' && env.SHOULD_BUILD == 'yes' && env.SHOULD_DEPLOY == 'yes'
 
-      - name: Check existing VSCodium tags/releases
+      - name: Check existing GRID tags/releases
         env:
           CHECK_REH: "no"
           DISABLE_APPIMAGE: ${{ vars.DISABLE_STABLE_APPIMAGE }}
@@ -369,7 +369,7 @@ jobs:
         run: ./install_gh.sh
         if: env.DISABLED != 'yes' && env.SHOULD_DEPLOY == 'yes'
 
-      - name: Check existing VSCodium tags/releases
+      - name: Check existing GRID tags/releases
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CHECK_ONLY_REH: "yes"
@@ -452,7 +452,7 @@ jobs:
         run: ./install_gh.sh
         if: env.SHOULD_DEPLOY == 'yes'
 
-      - name: Check existing VSCodium tags/releases
+      - name: Check existing GRID tags/releases
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CHECK_ONLY_REH: "yes"
@@ -490,7 +490,7 @@ jobs:
           retention-days: 3
         if: env.DISABLED != 'yes' && env.SHOULD_DEPLOY == 'no' && github.event.inputs.generate_assets == 'true'
 
-  # Void commented this out:
+  # GRID disabled
   # aur:
   #   needs:
   #     - check
@@ -500,9 +500,9 @@ jobs:
   #     fail-fast: false
   #     matrix:
   #       include:
-  #       - package_name: void
+  #       - package_name: grid
   #         package_type: stable
-  #       # - package_name: vscodium-git
+  #       # - package_name: grid-git
   #       #   package_type: rolling
   #   if: needs.check.outputs.SHOULD_DEPLOY == 'yes'
 
@@ -516,7 +516,7 @@ jobs:
   #         aur_username: ${{ secrets.AUR_USERNAME }}
   #         aur_email: ${{ secrets.AUR_EMAIL }}
 
-  # Void commented this out:
+  # GRID disabled
   # snap:
   #   needs:
   #     - check
@@ -524,7 +524,7 @@ jobs:
   #   runs-on: ubuntu-latest
   #   env:
   #     RELEASE_VERSION: ${{ needs.check.outputs.RELEASE_VERSION }}
-  #     SNAP_NAME: void
+  #     SNAP_NAME: grid
   #   strategy:
   #     fail-fast: false
   #     matrix:
@@ -608,5 +608,5 @@ jobs:
   #       uses: peter-evans/repository-dispatch@v3
   #       with:
   #         token: ${{ secrets.STRONGER_GITHUB_TOKEN }}
-  #         repository: VSCodium/repositories-linux
+  #         repository: GRID-Editor/repositories-linux
   #         event-type: deploy

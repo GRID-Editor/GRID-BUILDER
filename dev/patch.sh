@@ -9,7 +9,7 @@ cd vscode || { echo "'vscode' dir not found"; exit 1; }
 git add .
 git reset -q --hard HEAD
 
-while [[ -n "$( git log -1 | grep "VSCODIUM HELPER" )" ]]; do
+while [[ -n "$( git log -1 | grep "GRID HELPER" )" ]]; do
   git reset -q --hard HEAD~
 done
 
@@ -29,7 +29,7 @@ while [ $# -gt 1 ]; do
 done
 
 git add .
-git commit --no-verify -q -m "VSCODIUM HELPER"
+git commit --no-verify -q -m "GRID HELPER"
 
 if [[ "${1}" == *patch ]]; then
   FILE="../patches/${1}"

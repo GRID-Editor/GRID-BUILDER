@@ -14,10 +14,10 @@ on:
       checkout_pr:
         type: string
         description: Checkout PR
-      void_commit: # Void added this
+      grid_commit: # GRID
         type: string
-        description: Checkout specific Void commit
-      void_release: # Void added this
+        description: Checkout specific GRID commit
+      grid_release: # GRID
         type: string
         description: Custom release number
   repository_dispatch:
@@ -66,9 +66,9 @@ jobs:
         run: ./get_pr.sh
 
       - name: Clone VSCode repo
-        env: # Void added this
-          VOID_COMMIT: ${{ github.event.inputs.void_commit }} # Void added this
-          VOID_RELEASE: ${{ github.event.inputs.void_release }} # Void added this
+        env: # GRID
+          GRID_COMMIT: ${{ github.event.inputs.grid_commit }} # GRID
+          GRID_RELEASE: ${{ github.event.inputs.grid_release }} # GRID
         run: ./get_repo.sh
 
       - name: Check PR or cron
@@ -76,7 +76,7 @@ jobs:
           GENERATE_ASSETS: ${{ github.event.inputs.generate_assets }}
         run: ./check_cron_or_pr.sh
 
-      - name: Check existing VSCodium tags/releases
+      - name: Check existing GRID tags/releases
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CHECK_ALL: "yes"
@@ -129,9 +129,9 @@ jobs:
         if: env.SHOULD_BUILD == 'yes'
 
       - name: Clone VSCode repo
-        env: # Void added this
-          VOID_COMMIT: ${{ github.event.inputs.void_commit }} # Void added this
-          VOID_RELEASE: ${{ github.event.inputs.void_release }} # Void added this
+        env: # GRID
+          GRID_COMMIT: ${{ github.event.inputs.grid_commit }} # GRID
+          GRID_RELEASE: ${{ github.event.inputs.grid_release }} # GRID
         run: ./get_repo.sh
         if: env.SHOULD_BUILD == 'yes'
 
@@ -208,7 +208,7 @@ jobs:
           python-version: "3.11"
         if: env.SHOULD_BUILD == 'yes'
 
-      - name: Check existing VSCodium tags/releases
+      - name: Check existing GRID tags/releases
         env:
           DISABLE_MSI: ${{ vars.DISABLE_STABLE_MSI }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -233,7 +233,7 @@ jobs:
         run: ./prepare_assets.sh
         if: env.SHOULD_BUILD == 'yes' && (env.SHOULD_DEPLOY == 'yes' || github.event.inputs.generate_assets == 'true')
 
-      # Void commented this - we should re-add it eventually
+      # GRID disabled
       # - name: Upload unsigned artifacts
       #   id: upload-unsigned-artifacts
       #   uses: actions/upload-artifact@v6
@@ -266,7 +266,7 @@ jobs:
 
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.STRONGER_GITHUB_TOKEN }} # Void bumped this to stronger
+          GITHUB_TOKEN: ${{ secrets.STRONGER_GITHUB_TOKEN }} # GRID
         run: ./release.sh
         if: env.SHOULD_BUILD == 'yes' && env.SHOULD_DEPLOY == 'yes'
 
@@ -286,7 +286,7 @@ jobs:
           retention-days: 3
         if: env.SHOULD_BUILD == 'yes' && env.SHOULD_DEPLOY == 'no' && github.event.inputs.generate_assets == 'true'
 
-  # Void commented this - we should re-add it eventually
+  # GRID disabled
   # winget:
   #   needs: build
   #   runs-on: windows-latest
@@ -294,7 +294,7 @@ jobs:
   #     run:
   #       shell: bash
   #   env:
-  #     APP_IDENTIFIER: VSCodium.VSCodium
+  #     APP_IDENTIFIER: GRID.GRID
   #   if: needs.build.outputs.SHOULD_DEPLOY == 'yes'
   #
   #   steps:

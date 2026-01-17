@@ -57,7 +57,7 @@ See [BUILDING.md](./docs/BUILDING.md) for comprehensive build documentation.
 
 GRID uses a multi-repository architecture:
 
-- **GRID-IDE**: Core source code repository
+- **GRID**: Core source code repository
 - **GRID-BUILDER**: This repository - portable build/packaging system
 - **binaries**: Release artifacts storage (GitHub releases)
 - **versions**: Version metadata for auto-updates

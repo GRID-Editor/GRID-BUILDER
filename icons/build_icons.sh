@@ -38,7 +38,7 @@ VSCODE_PREFIX=""
 
 build_darwin_main() { # {{{
   if [[ ! -f "${SRC_PREFIX}src/${QUALITY}/resources/darwin/code.icns" ]]; then
-    rsvg-convert -w 655 -h 655 "icons/${QUALITY}/codium_cnl.svg" -o "code_logo.png"
+    rsvg-convert -w 655 -h 655 "icons/${QUALITY}/grid_logo.svg" -o "code_logo.png"
     composite "code_logo.png" -gravity center "icons/template_macos.png" "code_1024.png"
     convert "code_1024.png" -resize 512x512 code_512.png
     convert "code_1024.png" -resize 256x256 code_256.png
@@ -51,7 +51,7 @@ build_darwin_main() { # {{{
 } # }}}
 
 build_darwin_types() { # {{{
-  rsvg-convert -w 128 -h 128 "icons/${QUALITY}/codium_cnl_w80_b8.svg" -o "code_logo.png"
+  rsvg-convert -w 128 -h 128 "icons/${QUALITY}/grid_logo_small.svg" -o "code_logo.png"
 
   for file in "${VSCODE_PREFIX}"vscode/resources/darwin/*; do
     if [[ -f "${file}" ]]; then
@@ -76,8 +76,9 @@ build_darwin_types() { # {{{
 } # }}}
 
 build_linux_main() { # {{{
+  # GRID: Icons are already included in GRID source repo
   if [[ ! -f "${SRC_PREFIX}src/${QUALITY}/resources/linux/code.png" ]]; then
-    wget "https://raw.githubusercontent.com/VSCodium/icons/main/icons/linux/circle1/${COLOR}/paulo22s.png" -O "${SRC_PREFIX}src/${QUALITY}/resources/linux/code.png"
+    echo "Warning: Linux icon not found. GRID should include icons in source."
   fi
 
   mkdir -p "${SRC_PREFIX}src/${QUALITY}/resources/linux/rpm"
@@ -89,14 +90,15 @@ build_linux_main() { # {{{
 
 build_media() { # {{{
   if [[ ! -f "${SRC_PREFIX}src/${QUALITY}/src/vs/workbench/browser/media/code-icon.svg" ]]; then
-    cp "icons/${QUALITY}/codium_clt.svg" "${SRC_PREFIX}src/${QUALITY}/src/vs/workbench/browser/media/code-icon.svg"
+    cp "icons/${QUALITY}/grid_icon.svg" "${SRC_PREFIX}src/${QUALITY}/src/vs/workbench/browser/media/code-icon.svg"
     gsed -i 's|width="100" height="100"|width="1024" height="1024"|' "${SRC_PREFIX}src/${QUALITY}/src/vs/workbench/browser/media/code-icon.svg"
   fi
 } # }}}
 
 build_server() { # {{{
+  # GRID: Icons are already included in GRID source repo
   if [[ ! -f "${SRC_PREFIX}src/${QUALITY}/resources/server/favicon.ico" ]]; then
-    wget "https://raw.githubusercontent.com/VSCodium/icons/main/icons/win32/nobg/${COLOR}/paulo22s.ico" -O "${SRC_PREFIX}src/${QUALITY}/resources/server/favicon.ico"
+    echo "Warning: Server favicon not found. GRID should include icons in source."
   fi
 
   if [[ ! -f "${SRC_PREFIX}src/${QUALITY}/resources/server/code-192.png" ]]; then
@@ -109,8 +111,9 @@ build_server() { # {{{
 } # }}}
 
 build_windows_main() { # {{{
+  # GRID: Icons are already included in GRID source repo
   if [[ ! -f "${SRC_PREFIX}src/${QUALITY}/resources/win32/code.ico" ]]; then
-    wget "https://raw.githubusercontent.com/VSCodium/icons/main/icons/win32/nobg/${COLOR}/paulo22s.ico" -O "${SRC_PREFIX}src/${QUALITY}/resources/win32/code.ico"
+    echo "Warning: Windows icon not found. GRID should include icons in source."
   fi
 } # }}}
 
@@ -130,7 +133,7 @@ build_windows_type() { # {{{
       convert -size "${IMG_SIZE}" "${IMG_BG_COLOR}" "${FILE_PATH}"
     fi
 
-    rsvg-convert -w "${LOGO_SIZE}" -h "${LOGO_SIZE}" "icons/${QUALITY}/codium_cnl.svg" -o "code_logo.png"
+    rsvg-convert -w "${LOGO_SIZE}" -h "${LOGO_SIZE}" "icons/${QUALITY}/grid_logo.svg" -o "code_logo.png"
 
     composite -gravity "${GRAVITY}" "code_logo.png" "${FILE_PATH}" "${FILE_PATH}"
   fi
@@ -139,7 +142,7 @@ build_windows_type() { # {{{
 build_windows_types() { # {{{
   mkdir -p "${SRC_PREFIX}src/${QUALITY}/resources/win32"
 
-  rsvg-convert -b "#F5F6F7" -w 64 -h 64 "icons/${QUALITY}/codium_cnl.svg" -o "code_logo.png"
+  rsvg-convert -b "#F5F6F7" -w 64 -h 64 "icons/${QUALITY}/grid_logo.svg" -o "code_logo.png"
 
   for file in "${VSCODE_PREFIX}"vscode/resources/win32/*.ico; do
     if [[ -f "${file}" ]]; then

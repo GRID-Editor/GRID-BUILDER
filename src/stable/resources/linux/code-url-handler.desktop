@@ -9,4 +9,4 @@ NoDisplay=true
 StartupNotify=true
 Categories=Utility;TextEditor;Development;IDE;
 MimeType=x-scheme-handler/@@URLPROTOCOL@@;
-Keywords=grid;grid-ide;editor;
+Keywords=grid;grid;editor;

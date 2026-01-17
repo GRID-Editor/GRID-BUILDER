@@ -151,21 +151,21 @@ if [[ "${DISABLE_UPDATE}" != "yes" ]]; then
 fi
 
 if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
-  setpath "product" "nameShort" "GRID-IDE - Insiders"
-  setpath "product" "nameLong" "GRID-IDE - Insiders"
-  setpath "product" "applicationName" "grid-ide-insiders"
-  setpath "product" "dataFolderName" ".grid-ide-insiders"
-  setpath "product" "linuxIconName" "grid-ide-insiders"
+  setpath "product" "nameShort" "GRID Insiders"
+  setpath "product" "nameLong" "GRID Insiders"
+  setpath "product" "applicationName" "grid-insiders"
+  setpath "product" "dataFolderName" ".grid-insiders"
+  setpath "product" "linuxIconName" "grid-insiders"
   setpath "product" "quality" "insider"
-  setpath "product" "urlProtocol" "grid-ide-insiders"
-  setpath "product" "serverApplicationName" "grid-ide-server-insiders"
-  setpath "product" "serverDataFolderName" ".grid-ide-server-insiders"
+  setpath "product" "urlProtocol" "grid-insiders"
+  setpath "product" "serverApplicationName" "grid-server-insiders"
+  setpath "product" "serverDataFolderName" ".grid-server-insiders"
   setpath "product" "darwinBundleIdentifier" "com.grid.ide.insiders"
   setpath "product" "win32AppUserModelId" "GRID.IDE.Insiders"
   setpath "product" "win32DirName" "GRID Insiders"
-  setpath "product" "win32MutexName" "grid-ide-insiders"
+  setpath "product" "win32MutexName" "grid-insiders"
   setpath "product" "win32NameVersion" "GRID Insiders"
-  setpath "product" "win32RegValueName" "grid-ide-insiders"
+  setpath "product" "win32RegValueName" "grid-insiders"
   setpath "product" "win32ShellNameShort" "GRID Insiders"
   setpath "product" "win32AppId" "{{5893CE20-77AA-4856-A655-ECE65CBCF1C7}"
   setpath "product" "win32x64AppId" "{{7A261980-5847-44B6-B554-31DF0F5CDFC9}"
@@ -174,21 +174,21 @@ if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
   setpath "product" "win32x64UserAppId" "{{5B1813E3-1D97-4E00-AF59-C59A39CF066A}"
   setpath "product" "win32arm64UserAppId" "{{C2FA90D8-B265-41B1-B909-3BAEB21CAA9D}"
 else
-  setpath "product" "nameShort" "GRID-IDE"
-  setpath "product" "nameLong" "GRID-IDE"
-  setpath "product" "applicationName" "grid-ide"
-  setpath "product" "linuxIconName" "grid-ide"
+  setpath "product" "nameShort" "GRID"
+  setpath "product" "nameLong" "GRID"
+  setpath "product" "applicationName" "grid"
+  setpath "product" "linuxIconName" "grid"
   setpath "product" "quality" "stable"
-  setpath "product" "urlProtocol" "grid-ide"
-  setpath "product" "serverApplicationName" "grid-ide-server"
-  setpath "product" "serverDataFolderName" ".grid-ide-server"
+  setpath "product" "urlProtocol" "grid"
+  setpath "product" "serverApplicationName" "grid-server"
+  setpath "product" "serverDataFolderName" ".grid-server"
   setpath "product" "darwinBundleIdentifier" "com.grid.ide"
   setpath "product" "win32AppUserModelId" "GRID.IDE"
-  setpath "product" "win32DirName" "GRID-IDE"
-  setpath "product" "win32MutexName" "grid-ide"
-  setpath "product" "win32NameVersion" "GRID-IDE"
-  setpath "product" "win32RegValueName" "GRID-IDE"
-  setpath "product" "win32ShellNameShort" "GRID-IDE"
+  setpath "product" "win32DirName" "GRID"
+  setpath "product" "win32MutexName" "grid"
+  setpath "product" "win32NameVersion" "GRID"
+  setpath "product" "win32RegValueName" "GRID"
+  setpath "product" "win32ShellNameShort" "GRID"
   # GRID - already set in product
   # setpath "product" "win32AppId" "{{88DA3577-054F-4CA1-8122-7D820494CFFB}"
   # setpath "product" "win32x64AppId" "{{9D394D01-1728-45A7-B997-A6C82C5452C3}"
@@ -213,22 +213,22 @@ replace 's|Microsoft Corporation|GRID Editor|' package.json
 cp resources/server/manifest.json{,.bak}
 
 if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
-  setpath "resources/server/manifest" "name" "GRID-IDE - Insiders"
-  setpath "resources/server/manifest" "short_name" "GRID-IDE - Insiders"
+  setpath "resources/server/manifest" "name" "GRID Insiders"
+  setpath "resources/server/manifest" "short_name" "GRID Insiders"
 else
-  setpath "resources/server/manifest" "name" "GRID-IDE"
-  setpath "resources/server/manifest" "short_name" "GRID-IDE"
+  setpath "resources/server/manifest" "name" "GRID"
+  setpath "resources/server/manifest" "short_name" "GRID"
 fi
 
 cp resources/server/manifest.json{,.bak}
 
 if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
-  setpath "resources/server/manifest" "name" "GRID-IDE - Insiders"
-  setpath "resources/server/manifest" "short_name" "GRID-IDE - Insiders"
+  setpath "resources/server/manifest" "name" "GRID Insiders"
+  setpath "resources/server/manifest" "short_name" "GRID Insiders"
 else
   # GRID already has this
-  setpath "resources/server/manifest" "name" "GRID-IDE"
-  setpath "resources/server/manifest" "short_name" "GRID-IDE"
+  setpath "resources/server/manifest" "name" "GRID"
+  setpath "resources/server/manifest" "short_name" "GRID"
 fi
 
 # announcements
@@ -244,24 +244,24 @@ replace 's|([0-9]) Microsoft|\1 GRID|' build/lib/electron.ts
 if [[ "${OS_NAME}" == "linux" ]]; then
   # microsoft adds their apt repo to sources
   # unless the app name is code-oss
-  # as we are renaming the application to grid-ide
+  # as we are renaming the application to grid
   # we need to edit a line in the post install template
   if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
-    sed -i "s/code-oss/grid-ide-insiders/" resources/linux/debian/postinst.template
+    sed -i "s/code-oss/grid-insiders/" resources/linux/debian/postinst.template
   else
-    sed -i "s/code-oss/grid-ide/" resources/linux/debian/postinst.template
+    sed -i "s/code-oss/grid/" resources/linux/debian/postinst.template
   fi
 
   # fix the packages metadata
   # code.appdata.xml
-  sed -i 's|Visual Studio Code|GRID-IDE|g' resources/linux/code.appdata.xml
+  sed -i 's|Visual Studio Code|GRID|g' resources/linux/code.appdata.xml
   sed -i 's|https://code.visualstudio.com/docs/setup/linux|https://grideditor.com|' resources/linux/code.appdata.xml
-  sed -i 's|https://code.visualstudio.com/home/home-screenshot-linux-lg.png|https://vscodium.com/img/vscodium.png|' resources/linux/code.appdata.xml
+  sed -i 's|https://code.visualstudio.com/home/home-screenshot-linux-lg.png|https://grideditor.com/img/grid-screenshot.png|' resources/linux/code.appdata.xml
   sed -i 's|https://code.visualstudio.com|https://grideditor.com|' resources/linux/code.appdata.xml
 
   # control.template
   sed -i 's|Microsoft Corporation <vscode-linux@microsoft.com>|GRID Team <team@grideditor.com>|'  resources/linux/debian/control.template
-  sed -i 's|Visual Studio Code|GRID-IDE|g' resources/linux/debian/control.template
+  sed -i 's|Visual Studio Code|GRID|g' resources/linux/debian/control.template
   sed -i 's|https://code.visualstudio.com/docs/setup/linux|https://grideditor.com|' resources/linux/debian/control.template
   sed -i 's|https://code.visualstudio.com|https://grideditor.com|' resources/linux/debian/control.template
 

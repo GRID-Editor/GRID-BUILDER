@@ -12,23 +12,23 @@
   - [Proprietary Debugging Tools](#proprietary-debugging-tools)
   - [Proprietary Extensions](#proprietary-extensions)
 - [Extensions compatibility](https://github.com/millsydotdev/GRID/blob/master/docs/extensions-compatibility.md)
-- [Migrating from Visual Studio Code to VSCodium](#migrating-from-visual-studio-code-to-vscodium)
+- [Migrating from Visual Studio Code to GRID](#migrating-from-visual-studio-code-to-grid)
 - [Sign in with GitHub](#sign-in-with-github)
 - [Accounts authentication](https://github.com/millsydotdev/GRID/blob/master/docs/accounts-authentication.md)
-- [How do I run VSCodium in portable mode?](#how-do-i-run-vscodium-in-portable-mode)
+- [How do I run GRID in portable mode?](#how-do-i-run-grid-in-portable-mode)
 - [How do I fix the default file manager?](#how-do-i-fix-the-default-file-manager-linux)
-- [How do I press and hold a key and have it repeat in VSCodium?](#how-do-i-press-and-hold-a-key-and-have-it-repeat-in-vscodium-mac)
-- [How do I open VSCodium from the terminal?](#how-do-i-open-vscodium-from-the-terminal)
+- [How do I press and hold a key and have it repeat in GRID?](#how-do-i-press-and-hold-a-key-and-have-it-repeat-in-grid-mac)
+- [How do I open GRID from the terminal?](#how-do-i-open-grid-from-the-terminal)
   - [From Linux .tar.gz](#from-linux-targz)
 - [Troubleshooting](https://github.com/millsydotdev/GRID/blob/master/docs/troubleshooting.md)
 - [Contributing](https://github.com/millsydotdev/GRID/blob/master/CONTRIBUTING.md)
-- [How to build VSCodium](https://github.com/millsydotdev/GRID/blob/master/docs/howto-build.md)
+- [How to build GRID](https://github.com/millsydotdev/GRID/blob/master/docs/howto-build.md)
 
 ## Getting all the Telemetry Out
 
 Even though we do not pass the telemetry build flags (and go out of our way to cripple the baked-in telemetry), Microsoft will still track usage by default.
 
-We do however set the `telemetry.enableTelemetry` setting's default value to `false`. You can see those by viewing your VSCodium `settings.json` and searching for `telemetry`.
+We do however set the `telemetry.enableTelemetry` setting's default value to `false`. You can see those by viewing your GRID `settings.json` and searching for `telemetry`.
 
 The [telemetry documentation](https://code.visualstudio.com/docs/supporting/faq#_how-to-disable-telemetry-reporting) helps with explaining and toggling telemetry.
 
@@ -44,13 +44,13 @@ __Please note that some extensions send telemetry data to Microsoft as well. We 
 
 ### Replacements to Microsoft Online Services
 
-When searching the `@tag:usesOnlineServices` filter, note that while the "Update: Mode" setting description still says "The updates are fetched from a Microsoft online service", VSCodium's build script [sets the `updateUrl` field](https://github.com/millsydotdev/GRID/blob/master/prepare_vscode.sh#L36) in `product.json` to that of VSCodium's own small [update server](https://github.com/VSCodium/update-api), so enabling that setting won't actually result in any calls to Microsoft servers.
+When searching the `@tag:usesOnlineServices` filter, note that while the "Update: Mode" setting description still says "The updates are fetched from a Microsoft online service", GRID's build script [sets the `updateUrl` field](https://github.com/millsydotdev/GRID/blob/master/prepare_vscode.sh#L36) in `product.json` to that of GRID's own small [update server](https://github.com/GRID/update-api), so enabling that setting won't actually result in any calls to Microsoft servers.
 
-Likewise, while the descriptions for "Extensions: Auto Check Updates" and "Extensions: Auto Update" include the same phrase, VSCodium [replaces](https://github.com/millsydotdev/GRID/blob/master/prepare_vscode.sh#L42) the Visual Studio Marketplace with Open VSX, so these settings won't call Microsoft, either.
+Likewise, while the descriptions for "Extensions: Auto Check Updates" and "Extensions: Auto Update" include the same phrase, GRID [replaces](https://github.com/millsydotdev/GRID/blob/master/prepare_vscode.sh#L42) the Visual Studio Marketplace with Open VSX, so these settings won't call Microsoft, either.
 
 ## Extensions + Marketplace
 
-Being a vscode based editor, VSCodium gets additional features by installing VS Code extensions.
+Being a vscode based editor, GRID gets additional features by installing VS Code extensions.
 Unfortunately, as Microsoft [prohibits usages of the Microsoft marketplace by any other products](https://github.com/microsoft/vscode/issues/31168) or redistribution of `.vsix` files from it, in order to use VS Code extensions in non-Microsoft products those need to be installed differently.
 
 By default, the `product.json` file is set up to use [open-vsx.org](https://open-vsx.org/) as extension gallery, which has an [adapter](https://github.com/eclipse/openvsx/wiki/Using-Open-VSX-in-VS-Code) to the Marketplace API used by VS Code. Since that is a rather new project, you will likely miss some extensions you know from the VS Code Marketplace. You have the following options to obtain such missing extensions:
@@ -61,7 +61,7 @@ By default, the `product.json` file is set up to use [open-vsx.org](https://open
 
 ### How to use the Open VSX Registry
 
-As noted above, the [Open VSX Registry](https://open-vsx.org/) is the pre-set extension gallery in VSCodium. Using the extension view in VSCodium will therefore by default use it.
+As noted above, the [Open VSX Registry](https://open-vsx.org/) is the pre-set extension gallery in GRID. Using the extension view in GRID will therefore by default use it.
 See [this article from Gitpod](https://www.gitpod.io/blog/open-vsx/) for more information on the motivation behind Open VSX.
 
 ### How to use a different extension gallery
@@ -77,11 +77,11 @@ You can either use the following environment variables:
 - `VSCODE_GALLERY_EXTENSION_URL_TEMPLATE` ___(required)___
 - `VSCODE_GALLERY_RESOURCE_URL_TEMPLATE`
 
-Or by creating a custom `product.json` at the following location (replace `VSCodium` by `VSCodium - Insiders` if you use that):
+Or by creating a custom `product.json` at the following location (replace `GRID` by `GRID - Insiders` if you use that):
 
-- Windows: `%APPDATA%\VSCodium` or `%USERPROFILE%\AppData\Roaming\VSCodium`
-- macOS: `~/Library/Application Support/VSCodium`
-- Linux: `$XDG_CONFIG_HOME/VSCodium` or `~/.config/VSCodium`
+- Windows: `%APPDATA%\GRID` or `%USERPROFILE%\AppData\Roaming\GRID`
+- macOS: `~/Library/Application Support/GRID`
+- Linux: `$XDG_CONFIG_HOME/GRID` or `~/.config/GRID`
 
 with the content like:
 
@@ -105,7 +105,7 @@ Individual developers and enterprise companies in regulated or security-consciou
 There are likely other options, but the following were reported to work:
 
 - [Open VSX](https://github.com/eclipse/openvsx) eclipse open-source project
-  While the public instance which is run by the Eclipse Foundation is the pre-set endpoint in VSCodium, you can host your own instance.
+  While the public instance which is run by the Eclipse Foundation is the pre-set endpoint in GRID, you can host your own instance.
 
     > Open VSX is a [vendor-neutral](https://projects.eclipse.org/projects/ecd.openvsx) open-source alternative to the [Visual Studio Marketplace](https://marketplace.visualstudio.com/vscode). It provides a server application that manages [VS Code extensions](https://code.visualstudio.com/api) in a database, a web application similar to the VS Code Marketplace, and a command-line tool for publishing extensions similar to [vsce](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#vsce).
 
@@ -130,7 +130,7 @@ A workaround exists to get debugging working in C# projects, by using Samsung's 
 
 ### Proprietary Extensions
 
-Like the debuggers mentioned above, some extensions you may find in the marketplace (like the [Remote Development Extensions](https://code.visualstudio.com/docs/remote/remote-overview)) only function with the official Visual Studio Code build. You can work around this by adding the extension's internal ID (found on the extension's page) to the `extensionAllowedProposedApi` property of the product.json in your VSCodium installation. For example:
+Like the debuggers mentioned above, some extensions you may find in the marketplace (like the [Remote Development Extensions](https://code.visualstudio.com/docs/remote/remote-overview)) only function with the official Visual Studio Code build. You can work around this by adding the extension's internal ID (found on the extension's page) to the `extensionAllowedProposedApi` property of the product.json in your GRID installation. For example:
 
 ```jsonc
   "extensionAllowedProposedApi": [
@@ -143,9 +143,9 @@ Like the debuggers mentioned above, some extensions you may find in the marketpl
 
 In some cases, the above change won't help because the extension is hard-coded to only work with the official Visual Studio Code product.
 
-## Migrating from Visual Studio Code to VSCodium
+## Migrating from Visual Studio Code to GRID
 
-VSCodium (and a freshly cloned copy of vscode built from source) stores its extension files in `~/.vscode-oss`. So if you currently have Visual Studio Code installed, your extensions won't automatically populate. You can reinstall your extensions from the Marketplace in VSCodium, or copy the `extensions` from `~/.vscode/extensions` to `~/.vscode-oss/extensions`.
+GRID (and a freshly cloned copy of vscode built from source) stores its extension files in `~/.vscode-oss`. So if you currently have Visual Studio Code installed, your extensions won't automatically populate. You can reinstall your extensions from the Marketplace in GRID, or copy the `extensions` from `~/.vscode/extensions` to `~/.vscode-oss/extensions`.
 
 Visual Studio Code stores its `keybindings.json` and `settings.json` file in these locations:
 
@@ -153,21 +153,21 @@ Visual Studio Code stores its `keybindings.json` and `settings.json` file in the
 - __macOS__: `$HOME/Library/Application Support/Code/User`
 - __Linux__: `$HOME/.config/Code/User`
 
-You can copy these files to the VSCodium user settings folder:
+You can copy these files to the GRID user settings folder:
 
-- __Windows__: `%APPDATA%\VSCodium\User`
-- __macOS__: `$HOME/Library/Application Support/VSCodium/User`
-- __Linux__: `$HOME/.config/VSCodium/User`
+- __Windows__: `%APPDATA%\GRID\User`
+- __macOS__: `$HOME/Library/Application Support/GRID/User`
+- __Linux__: `$HOME/.config/GRID/User`
 
 To copy your settings manually:
 
 - In Visual Studio Code, go to Settings (Command+, if on a Mac)
 - Click the three dots `...` and choose 'Open settings.json'
-- Copy the contents of settings.json into the same place in VSCodium
+- Copy the contents of settings.json into the same place in GRID
 
 ## Sign in with GitHub
 
-In VSCodium, `Sign in with GitHub` is using a Personal Access Token.
+In GRID, `Sign in with GitHub` is using a Personal Access Token.
 Follow the documentation <https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token> to create your token.
 Select the scopes dependending on the extension which needs access to GitHub. (GitLens requires the `repo` scope.)
 
@@ -175,16 +175,16 @@ Select the scopes dependending on the extension which needs access to GitHub. (G
 
 If you are getting the error `Writing login information to the keychain failed with error 'The name org.freedesktop.secrets was not provided by any .service files'.`, you need to install the package `gnome-keyring`.
 
-## How do I run VSCodium in portable mode?
+## How do I run GRID in portable mode?
 
 You can follow the [Portable Mode instructions](https://code.visualstudio.com/docs/editor/portable) from the Visual Studio Code website.
 
 - __Windows__ / __Linux__ : the instructions can be followed as written.
-- __macOS__ : portable mode is enabled by the existence of a specially named folder. For Visual Studio Code that folder name is `code-portable-data`. For VSCodium, that folder name is `codium-portable-data`. So to enable portable mode for VSCodium on Mac OS, follow the instructions outlined in the [link above](https://code.visualstudio.com/docs/editor/portable), but create a folder named `codium-portable-data` instead of `code-portable-data`.
+- __macOS__ : portable mode is enabled by the existence of a specially named folder. For Visual Studio Code that folder name is `code-portable-data`. For GRID, that folder name is `codium-portable-data`. So to enable portable mode for GRID on Mac OS, follow the instructions outlined in the [link above](https://code.visualstudio.com/docs/editor/portable), but create a folder named `codium-portable-data` instead of `code-portable-data`.
 
 ## How do I fix the default file manager (Linux)?
 
-In some cases, VSCodium becomes the file manager used to open directories (instead of apps like Dolphin or Nautilus).
+In some cases, GRID becomes the file manager used to open directories (instead of apps like Dolphin or Nautilus).
 It's due to that no application was defined as the default file manager and so the system is using the latest capable application.
 
 To set the default app, create the file `~/.config/mimeapps.list` with the content like:
@@ -201,15 +201,15 @@ You can find your regular file manager with the command:
 inode/directory=codium.desktop;org.gnome.Nautilus.desktop;
 ```
 
-## How do I press and hold a key and have it repeat in VSCodium (Mac)?
+## How do I press and hold a key and have it repeat in GRID (Mac)?
 
-This is a common question for Visual Studio Code and the procedure is slightly different in VSCodium because the `defaults` path is different.
+This is a common question for Visual Studio Code and the procedure is slightly different in GRID because the `defaults` path is different.
 
 ```bash
-defaults write com.vscodium ApplePressAndHoldEnabled -bool false
+defaults write com.grid ApplePressAndHoldEnabled -bool false
 ```
 
-## How do I open VSCodium from the terminal?
+## How do I open GRID from the terminal?
 
 For macOS and Windows:
 
@@ -218,7 +218,7 @@ For macOS and Windows:
 
 ![Install command](https://user-images.githubusercontent.com/2707340/60140295-18338a00-9766-11e9-8fda-b525b6f15c13.png)
 
-This allows you to open files or directories in VSCodium directly from your terminal:
+This allows you to open files or directories in GRID directly from your terminal:
 
 ```bash
 ~/in-my-project $ codium . # open this directory
@@ -231,6 +231,6 @@ On Linux, when installed with a package manager, `codium` has been installed in 
 
 ### From Linux .tar.gz
 
-When the archive `VSCodium-linux-<arch>-<version>.tar.gz` is extracted, the main entry point for VSCodium is `./bin/codium`.
+When the archive `GRID-linux-<arch>-<version>.tar.gz` is extracted, the main entry point for GRID is `./bin/codium`.
 
-When the archive `VSCodium-linux-<arch>-<version>.tar.gz` is extracted, the main entry point for VSCodium is `./bin/codium`.
+When the archive `GRID-linux-<arch>-<version>.tar.gz` is extracted, the main entry point for GRID is `./bin/codium`.

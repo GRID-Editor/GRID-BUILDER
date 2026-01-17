@@ -21,7 +21,7 @@ export VSCODE_SKIP_NODE_VERSION_CHECK="yes"
 while getopts ":ilops" opt; do
   case "$opt" in
     i)
-      export BINARY_NAME="codium-insiders"
+      export BINARY_NAME="grid-insiders"
       export VSCODE_QUALITY="insider"
       ;;
     l)
@@ -121,9 +121,9 @@ if [[ "${SKIP_BUILD}" == "no" ]]; then
     mkdir -p ~/.gyp
 
     if [[ -f "${HOME}/.gyp/include.gypi" ]]; then
-      mv ~/.gyp/include.gypi ~/.gyp/include.gypi.pre-vscodium
+      mv ~/.gyp/include.gypi ~/.gyp/include.gypi.pre-grid
     else
-      echo "{}" > ~/.gyp/include.gypi.pre-vscodium
+      echo "{}" > ~/.gyp/include.gypi.pre-grid
     fi
 
     cp ./build/osx/include.gypi ~/.gyp/include.gypi
@@ -132,7 +132,7 @@ if [[ "${SKIP_BUILD}" == "no" ]]; then
   . build.sh
 
   if [[ -f "./include_${OS_NAME}.gypi" ]]; then
-    mv ~/.gyp/include.gypi.pre-vscodium ~/.gyp/include.gypi
+    mv ~/.gyp/include.gypi.pre-grid ~/.gyp/include.gypi
   fi
 
   if [[ "${VSCODE_LATEST}" == "yes" ]]; then

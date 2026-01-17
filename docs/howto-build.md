@@ -20,7 +20,7 @@ The comprehensive build guide includes:
 
 ---
 
-## Legacy VSCodium Build Instructions
+## Legacy GRID Build Instructions
 
 The following instructions are kept for historical reference but may be outdated for GRID IDE builds.
 
@@ -118,7 +118,7 @@ review-tools.snap-review --allow-classic codium*.snap
 
 - run `./dev/build.sh`, if a patch is failing then,
 - run `./dev/update_patches.sh`
-- when the script pauses at `Press any key when the conflict have been resolved...`, open `vscode` directory in **VSCodium**
+- when the script pauses at `Press any key when the conflict have been resolved...`, open `vscode` directory in **GRID**
 - fix all the `*.rej` files
 - run `npm run watch`
 - run `./script/code.sh` until everything is ok
@@ -127,7 +127,7 @@ review-tools.snap-review --allow-classic codium*.snap
 ## <a id="patch-update-process-manual"></a>Manual
 
 - run `./dev/build.sh`, if a patch is failing then,
-- open `vscode` directory in **VSCodium**
+- open `vscode` directory in **GRID**
 - revert all changes
 - run `git apply --reject ../patches/<name>.patch`
 - fix all the `*.rej` files
