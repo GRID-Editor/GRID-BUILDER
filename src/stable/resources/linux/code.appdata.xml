@@ -4,14 +4,14 @@
 	<metadata_license>@@LICENSE@@</metadata_license>
 	<project_license>@@LICENSE@@</project_license>
 	<name>@@NAME_LONG@@</name>
-	<url type="homepage">https://www.grid.com</url>
-	<summary>GRID. Code editing. Redefined.</summary>
+	<url type="homepage">https://grideditor.com</url>
+	<summary>GRID - AI-native code editor</summary>
 	<description>
-		<p>GRID is a community-driven, freely-licensed binary distribution of Microsoft's editor VS Code.</p>
+		<p>GRID is an open-source, AI-native code editor - the open-source alternative to Cursor.</p>
 	</description>
 	<screenshots>
 		<screenshot type="default">
-			<image>https://www.grid.com/img/grid.png</image>
+			<image>https://grideditor.com/img/grid-screenshot.png</image>
 			<caption>Editing C</caption>
 		</screenshot>
 	</screenshots>

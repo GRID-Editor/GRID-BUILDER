@@ -180,7 +180,7 @@ If you are getting the error `Writing login information to the keychain failed w
 You can follow the [Portable Mode instructions](https://code.visualstudio.com/docs/editor/portable) from the Visual Studio Code website.
 
 - __Windows__ / __Linux__ : the instructions can be followed as written.
-- __macOS__ : portable mode is enabled by the existence of a specially named folder. For Visual Studio Code that folder name is `code-portable-data`. For GRID, that folder name is `codium-portable-data`. So to enable portable mode for GRID on Mac OS, follow the instructions outlined in the [link above](https://code.visualstudio.com/docs/editor/portable), but create a folder named `codium-portable-data` instead of `code-portable-data`.
+- __macOS__ : portable mode is enabled by the existence of a specially named folder. For Visual Studio Code that folder name is `code-portable-data`. For GRID, that folder name is `grid-portable-data`. So to enable portable mode for GRID on Mac OS, follow the instructions outlined in the [link above](https://code.visualstudio.com/docs/editor/portable), but create a folder named `grid-portable-data` instead of `code-portable-data`.
 
 ## How do I fix the default file manager (Linux)?
 
@@ -198,7 +198,7 @@ You can find your regular file manager with the command:
 
 ```bash
 > grep directory /usr/share/applications/mimeinfo.cache
-inode/directory=codium.desktop;org.gnome.Nautilus.desktop;
+inode/directory=grid.desktop;org.gnome.Nautilus.desktop;
 ```
 
 ## How do I press and hold a key and have it repeat in GRID (Mac)?
@@ -214,23 +214,19 @@ defaults write com.grid ApplePressAndHoldEnabled -bool false
 For macOS and Windows:
 
 - Go to the command palette (View | Command Palette...)
-- Choose `Shell command: Install 'codium' command in PATH`.
-
-![Install command](https://user-images.githubusercontent.com/2707340/60140295-18338a00-9766-11e9-8fda-b525b6f15c13.png)
+- Choose `Shell command: Install 'grid' command in PATH`.
 
 This allows you to open files or directories in GRID directly from your terminal:
 
 ```bash
-~/in-my-project $ codium . # open this directory
-~/in-my-project $ codium file.txt # open this file
+~/in-my-project $ grid . # open this directory
+~/in-my-project $ grid file.txt # open this file
 ```
 
-Feel free to alias this command to something easier to type in your shell profile (e.g. `alias code=codium`).
+Feel free to alias this command to something easier to type in your shell profile (e.g. `alias code=grid`).
 
-On Linux, when installed with a package manager, `codium` has been installed in your `PATH`.
+On Linux, when installed with a package manager, `grid` has been installed in your `PATH`.
 
 ### From Linux .tar.gz
 
-When the archive `GRID-linux-<arch>-<version>.tar.gz` is extracted, the main entry point for GRID is `./bin/codium`.
-
-When the archive `GRID-linux-<arch>-<version>.tar.gz` is extracted, the main entry point for GRID is `./bin/codium`.
+When the archive `GRID-linux-<arch>-<version>.tar.gz` is extracted, the main entry point for GRID is `./bin/grid`.

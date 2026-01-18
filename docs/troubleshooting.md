@@ -21,7 +21,7 @@ The following command should help:
 
 ```
 rm -rf ~/.cache/fontconfig
-rm -rf ~/snap/codium/common/.cache
+rm -rf ~/snap/grid/common/.cache
 fc-cache -r
 ```
 
@@ -49,7 +49,7 @@ Credits: [Gerson](https://gitlab.com/paulcarroty/grid-deb-rpm-repo/-/issues/91)
 
 - blurry screen with HiDPI on wayland run:
   ```bash
-  flatpak override --user --nosocket=wayland com.grid.codium
+  flatpak override --user --nosocket=wayland com.grid.Grid
   ```
 - To execute commands on the host system, run inside the sandbox
   ```bash
@@ -61,9 +61,9 @@ Credits: [Gerson](https://gitlab.com/paulcarroty/grid-deb-rpm-repo/-/issues/91)
   TL;DR: use https://open-vsx.org/extension/zokugun/vsix-manager
 
 - SDKs
-  see [this](https://github.com/flathub/com.grid.codium?tab=readme-ov-file#sdks)
+  see [this](https://github.com/flathub/com.grid.Grid?tab=readme-ov-file#sdks)
 
-- If you have any other problems with the flatpak package try to look on the [FAQ](https://github.com/flathub/com.grid.codium?tab=readme-ov-file#faq) maybe the solution is already there or open an [issue](https://github.com/flathub/com.grid.codium/issues).
+- If you have any other problems with the flatpak package try to look on the [FAQ](https://github.com/flathub/com.grid.Grid?tab=readme-ov-file#faq) maybe the solution is already there or open an [issue](https://github.com/flathub/com.grid.Grid/issues).
 
 ##### <a id="linux-remote-ssh"></a>*Remote SSH doesn't work*
 
