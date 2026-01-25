@@ -46,7 +46,7 @@ if [[ "${SHOULD_BUILD}" == "yes" ]]; then
 
   npm run buildreact
 
-  npm run gulp compile-build-without-mangling
+  npm run gulp compile-build-with-mangling
   npm run gulp compile-extension-media
   npm run gulp compile-extensions-build
   npm run gulp minify-vscode
