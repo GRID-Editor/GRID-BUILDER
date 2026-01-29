@@ -42,11 +42,7 @@ else
   git config user.name "GRID Builder"
 
   # Apply helper/settings.patch first if it exists
-  if [[ -f "../patches/helper/settings.patch" ]]; then
-      git apply --reject "../patches/helper/settings.patch" || echo "Warning: settings.patch failed"
-      git add .
-      git commit -m "Apply settings.patch"
-  fi
+  # Note: settings.patch removed as it was outdated and settings.json is already customized for GRID
 
   # Apply all other patches
   for patch_file in ../patches/*.patch; do
@@ -57,7 +53,7 @@ else
       fi
 
       echo "Applying $(basename "$patch_file")..."
-      git apply --warn  "$patch_file" || echo "Warning: Failed to apply $patch_file"
+      git apply "$patch_file" || echo "Warning: Failed to apply $patch_file"
       git add .
       git commit -m "Apply $(basename "$patch_file")"
   done
