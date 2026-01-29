@@ -135,6 +135,9 @@ for i in {1..5}; do # try 5 times
   sleep $(( 15 * (i + 1)))
 done
 
+echo "Installing @tailwindcss/cli for build compatibility..."
+npm install -D @tailwindcss/cli
+
 mv .npmrc.bak .npmrc
 
 setpath() {
