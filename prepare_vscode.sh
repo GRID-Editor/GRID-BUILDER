@@ -137,6 +137,8 @@ done
 
 echo "Installing @tailwindcss/cli for build compatibility..."
 npm install -D @tailwindcss/cli
+echo "Installing @parcel/watcher to fix missing binary issue..."
+npm install -D @parcel/watcher
 
 mv .npmrc.bak .npmrc
 
